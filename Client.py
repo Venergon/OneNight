@@ -53,8 +53,7 @@ def deobfuscate(cipher, key):
 
 def print_with_key(msg, key):
     print(obfuscate(msg, key))
-    print()
-    print("key={}".format(key))
+    print(key)
 
 
 def generate_key():

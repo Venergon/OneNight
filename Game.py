@@ -133,7 +133,7 @@ class Game:
         print()
         print(player+":")
         print(cipher)
-        print("key={}".format(key))
+        print(key)
         print()
 
     @staticmethod
