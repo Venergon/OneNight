@@ -239,3 +239,19 @@ def submit_action(parameters, me):
     if g.actions_for_all():
         g.do_actions()
     g.save("curr.game")
+
+def vote(parameters, me):
+    g = Game.load("curr.game")
+    
+    if not me or me.zid not in g.players or g.stage != STAGE_DAY:
+        return
+
+    target = parameters.getvalue("target", None)
+
+    g.add_vote(me.zid, target)
+
+    if g.votes_for_all():
+        g.count_votes()
+
+    g.save("curr.game")
+

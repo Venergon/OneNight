@@ -11,6 +11,7 @@ from User import User
 from constants import *
 from Game import Game
 from DotH import *
+from CardBase import *
 
 def main():
     debug = False
@@ -49,6 +50,8 @@ def main():
         data_modification.leave_game(parameters, me)
     elif post_action == "submit_action":
         data_modification.submit_action(parameters, me)
+    elif post_action == "vote":
+        data_modification.vote(parameters, me)
 
     # If an action has been submitted through a form, find out what it is and do it
     page = parameters.getvalue('page', 'home_page')
@@ -233,10 +236,107 @@ def game_night(g, me):
 """).format(str(g.matchup[me.zid]), g.player_role_text(me.zid), actions_form(g, me))
 
 def game_day(g, me):
-    return "Game in day phase"
+    if me.zid not in g.players:
+        return """
+<h1>Game in Progress</h1>
+<p>Sorry, the game has already started without you :'(</p>
+<p>Hopefully you can get in earlier next time</p>"""
+    else:
+        return ("""
+<h1>Day Phase</h1>
+<h2>You are {}</h2>
+<p>{}</p>
+{}
+""").format(str(g.matchup[me.zid]), g.print_player_action(me.zid), actions_form(g,me))
 
 def game_done(g, me):
-    return "Game finished"
+    return_list = []
+    killed = g.count_votes()
+
+
+    return_list.append("""
+<h1>Aftermath</h1>""")
+
+    winning_teams = []
+    if not killed:
+        if g.card_in_play(Werewolf):
+            return_list.append("<p>After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
+                  "too, as there was still a werewolf.</p>")
+            winning_teams = [Team.Werewolf]
+        else:
+            return_list.append("<p>Eventually, the villagers realised there was not a werewolf in their midst and did not kill anyone.</p>")
+            winning_teams = [Team.Villager]
+    else:
+        total_killed = []
+
+        also_killed = []
+        dying_teams = []
+        for player in killed:
+            role = g.matchup[player]
+            if role.death_team == Team.Hunter:
+                also_killed.append(g.votes[player])
+
+            if role.death_team not in dying_teams:
+                dying_teams.append(role.death_team)
+            total_killed.append(player)
+
+        killed = copy.deepcopy(also_killed)
+        while killed:
+            also_killed = []
+            for player in killed:
+                role = g.matchup[player]
+                if role.death_team == Team.Hunter:
+                    also_killed.append(g.votes[player])
+
+                if role.death_team not in dying_teams:
+                    dying_teams.append(role.death_team)
+                total_killed.append(player)
+
+            killed = copy.deepcopy(also_killed)
+
+        if Team.Werewolf in dying_teams:
+            winning_teams = [Team.Villager]
+            return_list.append(("<p>After some reasoned arguments, the villagers finally chose to kill {}. As the blood spurted, a "
+                  "deathly howl was heard. It appeared the villagers had chosen "
+                  "wisely.</p>").format(" and ".join(total_killed)))
+
+
+        else:
+            winning_teams = [Team.Werewolf]
+            return_list.append("<p>The villagers finally decided on who must be the werewolf. They prepared the nooses and hung {}. "
+                  "Unfortunately, the villagers were not the best at judging character and did not get a werewolf. "
+                  "Looks like it's feeding time...</p>".format(" and ".join(total_killed)))
+            
+        if Team.Tanner in dying_teams:
+            winning_teams.append(Team.Tanner)
+            if Team.Werewolf in winning_teams:
+                winning_teams.remove(Team.Werewolf)
+                return_list.append("<p>However, a horrible stench filled the air. It turned out that the Tanner had been hung. This "
+                      "sent the werewolves into a blind raging, leading them to decimate the whole town but also "
+                      "ruining their appetite. Looks like everyone was unfortunate, except for the tanner.</p>")
+            else:
+                return_list.append("<p>But along with the werewolf, the villagers had also hung up the Tanner. The villagers moved as "
+                      "fast as possible to bury the Tanner. And thus the villagers survived, with little more problems "
+                      "than an irritated nose. And for once in their life the Tanner achieved what they wanted. Looks "
+                      "like all the humans live happily ever after...<p>")
+
+    winners = []
+    losers = []
+    for player, role in g.matchup.items():
+        if player in g.players:
+            if role.win_team in winning_teams:
+                winners.append(player+" "+str(role))
+            else:
+                losers.append(player+" "+str(role))
+
+    return_list.append("<p>The winners were: {}</p>".format(", ".join(winners)))
+    return_list.append("<p>The losers were: {}</p>".format(", ".join(losers)))
+
+    origins = []
+    for player, role in g.original.items():
+        origins.append(player+" "+str(role))
+    return_list.append("<p>The original roles were: {}</p>".format(", ".join(origins)))
+    return "\n".join(return_list)
 
 def actions_form(g, me):
     if g.stage == STAGE_NIGHT:
@@ -291,7 +391,22 @@ def actions_form(g, me):
 </form>""".format(phrase_mapping[option[0]], phrase_mapping[option[1]], phrase_mapping[option[0]], phrase_mapping[option[1]], phrase_to_targets(option[0], g, me), phrase_to_targets(option[1], g, me)))
         return "\n".join(return_list)
     elif g.stage == STAGE_DAY:
-        pass
+        players = phrase_to_targets("other", g, me)
+        if me.zid in g.votes:
+            voted = ""
+        else:
+            voted = "<b>NOT</b> "
+        return """
+<h1>Vote</h1>
+<p>You must vote for one other person to be lynched</p>
+<p>You have {}voted</p>
+<form method="POST" action="">
+    <input type="hidden" name="post_action" value="vote">
+    <select name="target">
+        {}
+    </select>
+    <input type="Submit" value="VOTE">
+</form>""".format(voted, players)
 
 def phrase_to_targets(phrase, g, me):
     if phrase == "centre":

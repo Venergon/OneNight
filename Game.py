@@ -141,6 +141,9 @@ class Game:
 
         for player, text in action_returns_list:
             self.print_encrypted_with_key(player, text, self.generate_key(512))
+    
+    def print_player_action(self, player):
+        return self.action_returns[player]
 
     @staticmethod
     def print_encrypted_with_key(player, text, key):
