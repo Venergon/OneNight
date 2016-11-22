@@ -1,4 +1,4 @@
-class Card:
+class Card(object):
     def __init__(self, game, player):
         self.game = game
         self.original_player = player
@@ -9,6 +9,13 @@ class Card:
 
     def __str__(self):
         return "a generic character"
+
+    @staticmethod
+    def __repr__():
+        return self.__name__
+
+    def __repr__(self):
+        return "{}(!currentgame!, {}, {})".format(type(self).__name__, repr(self.player), repr(self.original_player))
 
     def is_legal_action(self, person1, person2):
         raise NotImplementedError

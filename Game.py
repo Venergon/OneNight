@@ -1,6 +1,7 @@
 import random
 import string
 import collections
+import data_modification
 from CardBase import *
 from DotH import *
 import TerribleCrypto
@@ -8,6 +9,7 @@ import TerribleCrypto
 
 class Game:
     def __init__(self, players, roles):
+        self.stage = STAGE_BEFORE
         self.players = players
         self.roles = roles
         self.role_order = [Werewolf, Minion, Mason, Seer, Robber, Troublemaker,
@@ -19,6 +21,7 @@ class Game:
         self.arranged_roles = []
         self.matchup = {}
         self.original = {}
+        self.killed = []
 
     def set_players(self, players):
         self.players = players
@@ -55,6 +58,7 @@ class Game:
         for player in self.matchup:
             self.matchup[player] = self.matchup[player](self, player)
         self.original = copy.copy(self.matchup)
+        self.stage = STAGE_NIGHT
 
     def swap(self, player1, player2):
         self.matchup[player1], self.matchup[player2] = self.matchup[player2], self.matchup[player1]
@@ -117,11 +121,15 @@ class Game:
                     person1, person2 = self.actions_to_do[player]
                     self.action_returns[player] = player_role.do_action(person1, person2)
 
+        for player_role in self.matchup.values():
+            player_role.any_changes()
+
+        self.stage = STAGE_DAY
+
+    def print_actions(self):
         action_returns_list = list(self.action_returns.items())
         random.shuffle(action_returns_list)
 
-        for player_role in self.matchup.values():
-            player_role.any_changes()
 
         for player, text in action_returns_list:
             self.print_encrypted_with_key(player, text, self.generate_key(512))
@@ -174,6 +182,39 @@ class Game:
                 maximum = num
 
         if maximum == 1:
-            killed = None
+            killed = []
 
+        self.stage = STAGE_DONE
+        self.killed = killed
         return killed
+
+    def save(self, filename):
+        with open(filename, "w") as f:
+            f.write(str(self.stage)+"\n")
+            data_modification.list_to_file(self.killed, f)
+            data_modification.list_to_file(self.players, f)
+            data_modification.roles_list_to_file(self.roles, f)
+            data_modification.dict_to_file(self.action_returns, f)
+            data_modification.dict_to_file(self.actions_to_do, f)
+            data_modification.list_to_file(self.arranged_players, f)
+            data_modification.roles_list_to_file(self.arranged_roles, f)
+            data_modification.roles_dict_to_file(self.matchup, f)
+            data_modification.roles_dict_to_file(self.original, f)
+            data_modification.dict_to_file(self.votes, f)
+
+    @staticmethod
+    def load(filename):
+        g = Game(None, None)
+        with open(filename) as f:
+            g.stage = int(f.readline().strip("\n"))
+            g.killed = data_modification.text_to_list(f.readline().strip("\n"))
+            g.players = data_modification.text_to_list(f.readline().strip("\n"))
+            g.roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
+            g.action_returns = data_modification.text_to_dict(f.readline().strip("\n"))
+            g.actions_to_do = data_modification.text_to_dict(f.readline().strip("\n"))
+            g.arranged_players = data_modification.text_to_list(f.readline().strip("\n"))
+            g.arranged_roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
+            g.matchup = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
+            g.original = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
+            g.votes = data_modification.text_to_list(f.readline().strip("\n"))
+        return g

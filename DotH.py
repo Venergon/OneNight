@@ -22,7 +22,6 @@ class InvalidPlayerVoteError(InvalidVoteError):
 
 centre_cards = ["left", "centre", "right"]
 
-
 class Team(Enum):
     Villager = "Villagers"
     Werewolf = "Werewolves"
@@ -35,4 +34,7 @@ class Team(Enum):
     def __repr__(self):
         return self.value
 
-
+STAGE_BEFORE = 0
+STAGE_NIGHT = 1
+STAGE_DAY = 2
+STAGE_DONE = 3

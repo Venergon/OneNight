@@ -7,6 +7,7 @@ role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "
                     "Insomniac":Insomniac, "Tanner":Tanner, "Minion":Minion}
 
 
+
 def setup_game():
     players_string = input("Choose the players: ")
     players = players_string.split(",")
@@ -99,7 +100,7 @@ def voting(g):
     killed = g.count_votes()
 
     winning_teams = []
-    if killed is None:
+    if not killed:
         if g.card_in_play(Werewolf):
             print("After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
                   "too, as there was still a werewolf.")
@@ -181,7 +182,13 @@ def voting(g):
 
 def run_game():
     g = setup_game()
+    g.save("test1.txt")
+    g = Game.load("test1.txt")
     g = night_phase(g)
+    g.save("test2.txt")
+    g = Game.load("test2.txt")
     voting(g)
+    g.save("test3.txt")
+    g = Game.load("test3.txt")
 
 run_game()
