@@ -10,6 +10,9 @@ class Card(object):
     def __str__(self):
         return "a generic character"
 
+    def actions_wanted(self):
+        raise NotImplementedError
+
     @staticmethod
     def __repr__():
         return self.__name__

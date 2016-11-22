@@ -29,6 +29,10 @@ class Game:
     def add_players(self, players):
         self.players += players
 
+    def remove_player(self, player):
+        if player in self.players:
+            self.players.remove(player)
+
     def set_roles(self, roles):
         self.roles = roles
 
@@ -84,16 +88,20 @@ class Game:
                     role.add_others(to_return)
 
     def add_action(self, player, person1=None, person2=None):
-        if self.matchup[player].is_legal_action(person1, person2):
+        if self.matchup[player].is_legal_action(person1, person2) and (person1 != person2 or person1 is None):
             self.actions_to_do[player] = (person1, person2)
         else:
-            raise IsNotLegalError
+            raise IsNotLegalError("That is not a legal action. Did you select the same person twice?")
 
     def print_role_text(self):
         for player, player_role in self.matchup.items():
             if player not in centre_cards:
                 self.print_encrypted_with_key(player, player_role.init_text() + " " +
                                               self.init_win_text(player_role), self.generate_key(512))
+
+    def player_role_text(self, player):
+        role = self.matchup[player]
+        return role.init_text() + " " + self.init_win_text(role)
 
     @staticmethod
     def init_win_text(player_role):
@@ -204,17 +212,20 @@ class Game:
 
     @staticmethod
     def load(filename):
-        g = Game(None, None)
-        with open(filename) as f:
-            g.stage = int(f.readline().strip("\n"))
-            g.killed = data_modification.text_to_list(f.readline().strip("\n"))
-            g.players = data_modification.text_to_list(f.readline().strip("\n"))
-            g.roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
-            g.action_returns = data_modification.text_to_dict(f.readline().strip("\n"))
-            g.actions_to_do = data_modification.text_to_dict(f.readline().strip("\n"))
-            g.arranged_players = data_modification.text_to_list(f.readline().strip("\n"))
-            g.arranged_roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
-            g.matchup = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
-            g.original = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
-            g.votes = data_modification.text_to_list(f.readline().strip("\n"))
+        g = Game([], [])
+        try:
+            with open(filename) as f:
+                g.stage = int(f.readline().strip("\n"))
+                g.killed = data_modification.text_to_list(f.readline().strip("\n"))
+                g.players = data_modification.text_to_list(f.readline().strip("\n"))
+                g.roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
+                g.action_returns = data_modification.text_to_dict(f.readline().strip("\n"))
+                g.actions_to_do = data_modification.text_to_tuple_dict(f.readline().strip("\n"))
+                g.arranged_players = data_modification.text_to_list(f.readline().strip("\n"))
+                g.arranged_roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
+                g.matchup = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
+                g.original = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
+                g.votes = data_modification.text_to_dict(f.readline().strip("\n"))
+        except FileNotFoundError:
+            pass
         return g

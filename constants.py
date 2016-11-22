@@ -1,0 +1,3 @@
+DATA_DIRECTORY = "accounts"
+
+THINGS_PER_PAGE = 10

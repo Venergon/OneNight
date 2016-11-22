@@ -15,6 +15,9 @@ class Villager(Card):
     def __str__(self):
         return "a lowly Villager"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -22,7 +25,7 @@ class Villager(Card):
             return True
 
     def need_others(self):
-        return None
+        return [None]
 
     def add_others(self, others):
         raise NoKnowledgeError
@@ -50,6 +53,9 @@ class Seer(Card):
 
     def __str__(self):
         return "the mysterious Seer"
+
+    def actions_wanted(self):
+        return [("other", "other"), "centre", None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None and person2 is None:
@@ -94,6 +100,9 @@ class Troublemaker(Card):
 
     def __str__(self):
         return "the mischievous Troublemaker"
+
+    def actions_wanted(self):
+        return [("other", "other"), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None:
@@ -141,6 +150,9 @@ class Robber(Card):
     def __str__(self):
         return "the dastardly Robber"
 
+    def actions_wanted(self):
+        return [("other"), None]
+
     def is_legal_action(self, person1, person2):
         if person1 is None:
             return True
@@ -185,6 +197,9 @@ class Mason(Card):
     def __str__(self):
         return "an ominous Mason"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -228,6 +243,9 @@ class Drunk(Card):
     def __str__(self):
         return "the helpless Drunk"
 
+    def actions_wanted(self):
+        return [("centre")]
+
     def is_legal_action(self, person1, person2):
         if person1 is None or person2 is not None:
             return False
@@ -267,6 +285,9 @@ class Hunter(Card):
     def __str__(self):
         return "the courageous Hunter"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -302,6 +323,9 @@ class Insomniac(Card):
 
     def __str__(self):
         return "the irritable Insomniac"
+
+    def actions_wanted(self):
+        [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
@@ -342,6 +366,12 @@ class Werewolf(Card):
 
     def __str__(self):
         return "A BLOODY WEREWOLF"
+
+    def actions_wanted(self):
+        if self.others is not None:
+            return [None]
+        else:
+            return [("centre"), None]
 
     def is_legal_action(self, person1, person2):
         if self.others is not None:
@@ -402,6 +432,9 @@ class Minion(Card):
     def __str__(self):
         return "THE TRAITOROUS MINION"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -442,6 +475,9 @@ class Tanner(Card):
 
     def __str__(self):
         return "the pitiful Tanner"
+
+    def actions_wanted(self):
+        return [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
