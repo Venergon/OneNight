@@ -425,6 +425,15 @@ def phrase_to_targets(phrase, g, me):
         players = copy.copy(g.players)
         players = map(lambda x: '<option value="{}">{}</option>'.format(x,x), players)
         return "\n".join(list(players))
+    elif phrase == "non_wolf":
+        players = copy.copy(g.players)
+        players.remove(me.zid)
+        for player in players:
+            if isinstance(g.original[player], Wolf):
+                players.remove(player)
+
+        players = map(lambda x: '<option value="{}">{}</option>'.format(x, x), players)
+        return "\n".join(list(players))
 
 #
 # HTML placed at the bottom of every page
