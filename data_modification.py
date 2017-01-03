@@ -100,7 +100,7 @@ def load_matchup(text, g):
     matchup = text_to_roles_dict(text, g)
     original = {}
     for role in matchup.items():
-        original[role.original_player] = role
+        original[role[1].original_player] = role[1]
 
     return matchup, original
 

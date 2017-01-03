@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b0945792-7fd9-4071-857a-2abbf3febbe8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Game.py" afterPath="$PROJECT_DIR$/Game.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_modification.py" afterPath="$PROJECT_DIR$/data_modification.py" />
     </list>
     <ignored path="OneNight.iws" />
@@ -128,8 +127,8 @@
       <file leaf-file-name="data_modification.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data_modification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.93950176">
-              <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.7882562">
+              <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -649,7 +648,13 @@
       <option name="project" value="LOCAL" />
       <updated>1483443243647</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fixed loading treating matchup and original as using seperate cards">
+      <created>1483444190167</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1483444190167</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -707,7 +712,8 @@
     <MESSAGE value="fixed give_info showing the centre wolf" />
     <MESSAGE value="fixed mystic wolf's do_action using matchup rather than peek" />
     <MESSAGE value="added wolf to the centre_cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="added wolf to the centre_cards" />
+    <MESSAGE value="fixed loading treating matchup and original as using seperate cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed loading treating matchup and original as using seperate cards" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1168,8 +1174,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data_modification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.93950176">
-          <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.7882562">
+          <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
