@@ -145,9 +145,9 @@ class Game:
         if not self.actions_for_all():
                 raise ValueError("Not every player has an action yet")
 
-        original_matchup = copy.copy(self.matchup)
+        original_original = copy.copy(self.original)
         for role in self.role_order:
-            for player, player_role in original_matchup.items():
+            for player, player_role in original_original.items():
                 if type(player_role) == role and player not in centre_cards:
                     person1, person2 = self.actions_to_do[player]
                     self.action_returns[player] = player_role.do_action(person1, person2)
