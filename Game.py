@@ -107,7 +107,7 @@ class Game:
 
     # Add the actions for one of the players onto the dict for use once all actions are in
     def add_action(self, player, person1=None, person2=None):
-        if self.matchup[player].is_legal_action(person1, person2) and (person1 != person2 or person1 is None):
+        if self.original[player].is_legal_action(person1, person2) and (person1 != person2 or person1 is None):
             self.actions_to_do[player] = (person1, person2)
         else:
             raise IsNotLegalError("That is not a legal action. Did you select the same person twice?")
