@@ -20,7 +20,7 @@ class SelfVoteError(InvalidVoteError):
 class InvalidPlayerVoteError(InvalidVoteError):
     pass
 
-centre_cards = ["left", "centre", "right", "wolfling"]
+centre_cards = ["left", "centre", "right", ""]
 
 class Team(Enum):
     Villager = "Villagers"
