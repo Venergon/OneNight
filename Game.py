@@ -241,7 +241,6 @@ class Game:
             data_modification.list_to_file(self.arranged_players, f)
             data_modification.roles_list_to_file(self.arranged_roles, f)
             data_modification.roles_dict_to_file(self.matchup, f)
-            data_modification.roles_dict_to_file(self.original, f)
             data_modification.dict_to_file(self.votes, f)
 
     @staticmethod
@@ -257,8 +256,7 @@ class Game:
                 g.actions_to_do = data_modification.text_to_tuple_dict(f.readline().strip("\n"))
                 g.arranged_players = data_modification.text_to_list(f.readline().strip("\n"))
                 g.arranged_roles = data_modification.text_to_roles_list(f.readline().strip("\n"))
-                g.matchup = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
-                g.original = data_modification.text_to_roles_dict(f.readline().strip("\n"), g)
+                g.matchup, g.original = data_modification.load_matchup(f.readline().strip("\n"), g)
                 g.votes = data_modification.text_to_dict(f.readline().strip("\n"))
         except FileNotFoundError:
             pass

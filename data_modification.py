@@ -96,6 +96,14 @@ def text_to_roles_dict(text, g):
             d[key] = value
     return d
 
+def load_matchup(text, g):
+    matchup = text_to_roles_dict(text, g)
+    original = {}
+    for role in matchup.items():
+        original[role.original_player] = role
+
+    return matchup, original
+
 def string_to_list(text):
     if text == "":
         #Just return the empty list
