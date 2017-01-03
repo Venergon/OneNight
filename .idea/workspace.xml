@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b0945792-7fd9-4071-857a-2abbf3febbe8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Game.py" afterPath="$PROJECT_DIR$/Game.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardBase.py" afterPath="$PROJECT_DIR$/CardBase.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardDaybreak.py" afterPath="$PROJECT_DIR$/CardDaybreak.py" />
     </list>
     <ignored path="OneNight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,10 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Game.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42348754">
+            <state vertical-scroll-proportion="21.689655">
               <caret line="101" column="65" selection-start-line="101" selection-start-column="65" selection-end-line="101" selection-end-column="65" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -51,8 +52,8 @@
       <file leaf-file-name="CardBase.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CardBase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-167.65517">
-              <caret line="391" column="40" selection-start-line="391" selection-start-column="28" selection-end-line="391" selection-end-column="40" />
+            <state vertical-scroll-proportion="-3.5172415">
+              <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -92,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CardDaybreak.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CardDaybreak.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CardDaybreak.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-134.82759">
-              <caret line="230" column="75" selection-start-line="230" selection-start-column="72" selection-end-line="230" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.12099644">
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -155,15 +156,15 @@
         <option value="$PROJECT_DIR$/Cards.py" />
         <option value="$PROJECT_DIR$/dotH.py" />
         <option value="$PROJECT_DIR$/TerribleCrypto.py" />
-        <option value="$PROJECT_DIR$/CardBase.py" />
         <option value="$PROJECT_DIR$/Client.py" />
         <option value="$PROJECT_DIR$/CardTemplate.py" />
         <option value="$PROJECT_DIR$/RunGame.cgi" />
         <option value="$PROJECT_DIR$/RunGame.py" />
-        <option value="$PROJECT_DIR$/CardDaybreak.py" />
         <option value="$PROJECT_DIR$/DotH.py" />
         <option value="$PROJECT_DIR$/data_modification.py" />
         <option value="$PROJECT_DIR$/Game.py" />
+        <option value="$PROJECT_DIR$/CardBase.py" />
+        <option value="$PROJECT_DIR$/CardDaybreak.py" />
       </list>
     </option>
   </component>
@@ -660,7 +661,13 @@
       <option name="project" value="LOCAL" />
       <updated>1483444284719</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fiuxed give_info using the matchup rather than original">
+      <created>1483444347531</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1483444347531</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -720,7 +727,8 @@
     <MESSAGE value="added wolf to the centre_cards" />
     <MESSAGE value="fixed loading treating matchup and original as using seperate cards" />
     <MESSAGE value="fixed load_matchup using the tuple rather than the role itself" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed load_matchup using the tuple rather than the role itself" />
+    <MESSAGE value="fiuxed give_info using the matchup rather than original" />
+    <option name="LAST_COMMIT_MESSAGE" value="fiuxed give_info using the matchup rather than original" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1123,24 +1131,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-167.65517">
-          <caret line="391" column="40" selection-start-line="391" selection-start-column="28" selection-end-line="391" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DotH.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RunGame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1148,24 +1138,6 @@
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardDaybreak.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-134.82759">
-          <caret line="230" column="75" selection-start-line="230" selection-start-column="72" selection-end-line="230" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardTemplate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1179,12 +1151,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DotH.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardTemplate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42348754">
+        <state vertical-scroll-proportion="21.689655">
           <caret line="101" column="65" selection-start-line="101" selection-start-column="65" selection-end-line="101" selection-end-column="65" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.5172415">
+          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardDaybreak.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12099644">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

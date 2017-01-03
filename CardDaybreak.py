@@ -2,7 +2,7 @@ from CardTemplate import *
 from DotH import *
 import copy
 
-# TODO: Curator, Revealer, Bodyguard, Witch, Apprentice Seer, Sentinel, Paranomal Investigator, Alpha Wolf
+# TODO: Curator, Revealer, Bodyguard, Witch, Sentinel, Paranomal Investigator
 
 
 # Can move everyone's card either one to the left or one to the right, Townie
@@ -88,6 +88,46 @@ class VillageIdiot(Card):
     def any_changes(self):
         pass
 
+# Like the seer but can only see a centre card
+class ApprenticeSeer(Card):
+    def __init__(self, game, player):
+        super().__init__(game, player)
+        self.win_team = Team.Villager
+        self.death_team = Team.Villager
+
+    def __str__(self):
+        return "the curious Apprentice Seer"
+
+    def actions_wanted(self):
+        return [("centre",), None]
+
+    def is_legal_action(self, person1, person2):
+        if person2 is not None:
+            return False
+        if person1 is None or person1 in centre_cards:
+            return True
+        return False
+
+    def need_others(self):
+        return None
+
+    def add_others(self, others):
+        raise NoKnowledgeError
+
+    def init_text(self):
+        return "You are the Apprentice Seer! Since you are still learning, " \
+               "you only have the power to look at one centre card."
+
+    def do_action(self, person1=None, person2=None):
+        if not self.is_legal_action(person1, person2):
+            raise IsNotLegalError
+        elif person1 is None:
+            return "Still not confident in your abilities, you decide to stay safe for tonight."
+        else:
+            return "You sense that {} is not currently with us".format(self.game.peek(person1))
+
+    def any_changes(self):
+        pass
 
 # Does not wake up with the other werewolves, werewolf
 class DreamWolf(Wolf):
@@ -240,12 +280,11 @@ class AlphaWolf(Wolf):
                 return ("Along with converting {} into a werewolf, you saw that {} was {}."
                     ).format(person1, person2, self.game.peek(person2))
             else:
-                return "Excellent, your new apprentice {} is well on their way to becoming a full grown werewolf. " \
-                       "Today will be fun..."
+                return ("Excellent, your new apprentice {} is well on their way to becoming a full grown werewolf. " \
+                       "Today will be fun...").format(person1)
 
     def any_changes(self):
         pass
-
 
 # Special role to be used ONLY as the centre wolf card, other than that is effectively a normal werewolf
 class Wolfling(Wolf):

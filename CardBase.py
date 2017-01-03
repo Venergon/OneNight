@@ -56,7 +56,7 @@ class Seer(Card):
         return "the mysterious Seer"
 
     def actions_wanted(self):
-        return [("other", "other"), ("centre",), None]
+        return [("other", ), ("centre", "centre"), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None and person2 is None:
