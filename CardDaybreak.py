@@ -200,9 +200,9 @@ class AlphaWolf(Wolf):
 
     def actions_wanted(self):
         if self.others is None:
-            return [('non_wolf', 'centre'), ('non_wolf',), (None,'centre'), None]
+            return [('non_wolf', 'centre'), ('non_wolf',)]
         else:
-            return [('non_wolf',), None]
+            return [('non_wolf',)]
 
     def is_legal_action(self, person1, person2):
         person1_valid = (person1 is not None and person1 not in centre_cards and not isinstance(self.game.original[person1], Wolf))
