@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b0945792-7fd9-4071-857a-2abbf3febbe8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardDaybreak.py" afterPath="$PROJECT_DIR$/CardDaybreak.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardTemplate.py" afterPath="$PROJECT_DIR$/CardTemplate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DotH.py" afterPath="$PROJECT_DIR$/DotH.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Game.py" afterPath="$PROJECT_DIR$/Game.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RunGame.cgi" afterPath="$PROJECT_DIR$/RunGame.cgi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RunGame.py" afterPath="$PROJECT_DIR$/RunGame.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_modification.py" afterPath="$PROJECT_DIR$/data_modification.py" />
     </list>
     <ignored path="OneNight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,8 +26,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.6469274">
-              <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.2972067">
+              <caret line="179" column="15" selection-start-line="179" selection-start-column="15" selection-end-line="179" selection-end-column="15" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -609,7 +602,13 @@
       <option name="project" value="LOCAL" />
       <updated>1483431146048</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added in some daybreak functionality">
+      <created>1483432644907</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1483432644907</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -658,7 +657,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merging with desktop version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merging with desktop version" />
+    <MESSAGE value="added in some daybreak functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="added in some daybreak functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1119,8 +1119,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6469274">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.2972067">
+          <caret line="179" column="15" selection-start-line="179" selection-start-column="15" selection-end-line="179" selection-end-column="15" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
