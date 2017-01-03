@@ -97,9 +97,7 @@ Set-Cookie: token={}; httponly; Path=/
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>matelook</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/matelook.css" rel="stylesheet">
+<title>One Night Ultimate Werewolf</title>
 </head>""".format(token)
 
 
@@ -109,11 +107,11 @@ Set-Cookie: token={}; httponly; Path=/
 def body_start(parameters, me):
     if me:
         login = """
-<a href="matelook.cgi?page=user_page&zid={}">Welcome {}</a>
+Welcome {}
 <form method="POST" action="">
     <input type="hidden" name="post_action" value="log_out">
     <input type="submit" value="Log Out">
-</form>""".format(me.zid, me.zid)
+</form>""".format(me.zid)
     else:
         token = ""
         login = """
@@ -232,8 +230,9 @@ def game_night(g, me):
 <h1>Night Phase</h1>
 <h2>You are {}</h2>
 <p>{}</p>
+<p>The roles are: {}</p>
 {}
-""").format(str(g.matchup[me.zid]), g.player_role_text(me.zid), actions_form(g, me))
+""").format(str(g.original[me.zid]), g.player_role_text(me.zid), list(map(lambda x: x.__name__, g.roles)), actions_form(g, me))
 
 def game_day(g, me):
     if me.zid not in g.players:
@@ -246,8 +245,9 @@ def game_day(g, me):
 <h1>Day Phase</h1>
 <h2>You are {}</h2>
 <p>{}</p>
+<p>The roles are: {}</p>
 {}
-""").format(str(g.matchup[me.zid]), g.print_player_action(me.zid), actions_form(g,me))
+""").format(str(g.original[me.zid]), g.print_player_action(me.zid), list(map(lambda x: x.__name__, g.roles)), actions_form(g,me))
 
 def game_done(g, me):
     return_list = []
@@ -345,6 +345,7 @@ def actions_form(g, me):
 
         if me.zid in g.actions_to_do:
             return_list.append("<p>You have chosen an action</p>")
+            return_list.append("<p>You have chosen to interact with {}</p>".format(g.actions_to_do[me.zid]))
         else:
             return_list.append("<p>You have <b>NOT</b> chosen an action</p>")
         
@@ -393,13 +394,13 @@ def actions_form(g, me):
     elif g.stage == STAGE_DAY:
         players = phrase_to_targets("other", g, me)
         if me.zid in g.votes:
-            voted = ""
+            voted = "voted for {}".format(g.votes[me.zid])
         else:
-            voted = "<b>NOT</b> "
+            voted = "<b>NOT voted</b> "
         return """
 <h1>Vote</h1>
 <p>You must vote for one other person to be lynched</p>
-<p>You have {}voted</p>
+<p>You have {}</p>
 <form method="POST" action="">
     <input type="hidden" name="post_action" value="vote">
     <select name="target">
@@ -412,7 +413,7 @@ def phrase_to_targets(phrase, g, me):
     if phrase == "centre":
         return """
         <option value="left">Left</option>
-        <option value="middle">Middle</option>
+        <option value="centre">Centre</option>
         <option value="right">Right</option>"""
     elif phrase == "other":
         players = copy.copy(g.players)
@@ -441,9 +442,8 @@ def login_fail():
 
 def account_creation_successful():
     return """<h1>Success!</h1>
-<p>Your Matelook account has been created</p>
-<p>You will receive an email shortly prompting you to activate this account</p>
-<p>Thank you for choosing Matelook</p>"""
+<p>Your account has been created</p>
+<p>Log in to start playing</p>"""
 
 def account_creation_failed():
     return """<h1>Account Creation Error</h1>
@@ -452,43 +452,6 @@ def account_creation_failed():
 have not put in a zid and password</p>
 <p>Please try again</p>"""
 
-def account_confirmation_successful():
-    return """<h1>Success!</h1>
-<p>Your Matelook account has been activated.</p>
-<p><a href="matelook.cgi">Click Here</a> to start mating</p>"""
-
-def account_confirmation_failed():
-    return """<h1>Account Activation Error</h1>
-<p>Oops! Something went wrong with your account activation</p>
-<p>Have you already activated your account?</p>"""
-
-# Send an email to the user with their password
-# Also tell the person requesting the page that that has been done
-def recover_password(parameters):
-    zid = parameters.getvalue("recover_zid", "")
-
-    if zid:
-        user = User(zid, None)
-
-        #Email the user with a confirmation link
-        email_text = """Dear {},
-We are sorry to hear that you have forgotten your password. Your password is:
-
-{}
-
-(Please do not use our website, we are horribly insecure, as you can tell by the passwords being stored in plaintext)
-Thanks,
-
-The Matelook Team""".format(user.name, user.password)
-        os.system("echo '{}' | mail -s 'Your matelook account' {}".format(email_text, user.email))
-
-        return """<div class="matelook_box">
-<h1>Password on the way!</h1>
-Your password is currently being sent by email as we speak.
-
-Thank you for using Matelook!
-</div>"""
-    
 
 if __name__ == '__main__':
     debug = 1

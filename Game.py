@@ -62,6 +62,7 @@ class Game:
         for player in self.matchup:
             self.matchup[player] = self.matchup[player](self, player)
         self.original = copy.copy(self.matchup)
+        self.giveinfo()
         self.stage = STAGE_NIGHT
 
     def swap(self, player1, player2):
@@ -81,6 +82,8 @@ class Game:
             if things_to_find is not None:
                 to_return = []
                 for type_to_check in things_to_find:
+                    if type_to_check is None:
+                        continue
                     for other_player, other_role in self.matchup.items():
                         if isinstance(other_role, type_to_check) and other_player not in centre_cards:
                             to_return.append(other_player)
@@ -206,7 +209,7 @@ class Game:
             data_modification.list_to_file(self.players, f)
             data_modification.roles_list_to_file(self.roles, f)
             data_modification.dict_to_file(self.action_returns, f)
-            data_modification.dict_to_file(self.actions_to_do, f)
+            data_modification.tuple_dict_to_file(self.actions_to_do, f)
             data_modification.list_to_file(self.arranged_players, f)
             data_modification.roles_list_to_file(self.arranged_roles, f)
             data_modification.roles_dict_to_file(self.matchup, f)
@@ -231,4 +234,6 @@ class Game:
                 g.votes = data_modification.text_to_dict(f.readline().strip("\n"))
         except FileNotFoundError:
             pass
+        if g.stage >= STAGE_NIGHT: 
+            g.give_info()
         return g

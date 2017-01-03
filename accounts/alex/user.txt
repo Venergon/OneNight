@@ -1,3 +1,0 @@
-
-zid=alex
-password=test

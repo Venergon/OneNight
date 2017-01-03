@@ -2,7 +2,7 @@ from CardBase import *
 from constants import *
 from User import User
 from Game import Game
-import os, glob, string, random, shutil
+import os, glob, string, random, shutil, copy
 
 role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "Mason":Mason,
                     "Troublemaker":Troublemaker, "Drunk":Drunk, "Hunter":Hunter, "Seer":Seer,
@@ -40,6 +40,14 @@ def dict_to_file(d, f):
 
 def roles_dict_to_file(d, f):
     f.write("`".join(map(lambda x: "{}:{}".format(x, char_to_text(d[x])), d))+"\n")
+
+def tuple_dict_to_file(d, f):
+    a = copy.deepcopy(d)
+    for key in a:
+        val = a[key]
+        val = "("+",".join(map(lambda x: "None" if x is None else x.strip(), val))+")"
+        a[key] = val
+    dict_to_file(a,f)
 
 def text_to_tuple_dict(text):
     d = {}

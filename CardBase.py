@@ -55,7 +55,7 @@ class Seer(Card):
         return "the mysterious Seer"
 
     def actions_wanted(self):
-        return [("other", "other"), "centre", None]
+        return [("other", "other"), ("centre",), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None and person2 is None:
@@ -151,7 +151,7 @@ class Robber(Card):
         return "the dastardly Robber"
 
     def actions_wanted(self):
-        return [("other"), None]
+        return [("other",), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None:
@@ -244,7 +244,7 @@ class Drunk(Card):
         return "the helpless Drunk"
 
     def actions_wanted(self):
-        return [("centre")]
+        return [("centre",)]
 
     def is_legal_action(self, person1, person2):
         if person1 is None or person2 is not None:
@@ -371,7 +371,7 @@ class Werewolf(Card):
         if self.others is not None:
             return [None]
         else:
-            return [("centre"), None]
+            return [("centre",), None]
 
     def is_legal_action(self, person1, person2):
         if self.others is not None:
