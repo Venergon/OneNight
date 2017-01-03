@@ -27,8 +27,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19515012">
-              <caret line="74" column="18" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.6270208">
+              <caret line="93" column="56" selection-start-line="93" selection-start-column="56" selection-end-line="93" selection-end-column="56" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -621,7 +621,13 @@
       <option name="project" value="LOCAL" />
       <updated>1483432966340</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fixed a bug where giveinfo was called rather than give_info">
+      <created>1483442278508</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1483442278508</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -672,7 +678,8 @@
     <MESSAGE value="Merging with desktop version" />
     <MESSAGE value="added in some daybreak functionality" />
     <MESSAGE value="made some naming more consistent" />
-    <option name="LAST_COMMIT_MESSAGE" value="made some naming more consistent" />
+    <MESSAGE value="fixed a bug where giveinfo was called rather than give_info" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug where giveinfo was called rather than give_info" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1133,8 +1140,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19515012">
-          <caret line="74" column="18" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.6270208">
+          <caret line="93" column="56" selection-start-line="93" selection-start-column="56" selection-end-line="93" selection-end-column="56" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

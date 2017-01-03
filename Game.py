@@ -89,14 +89,17 @@ class Game:
 
     # Finds all of the roles that a card needs for its role text and gives it to the card
     def give_info(self):
-        for player, role in self.matchup.items():
+        for player, role in self.original.items():
+            if player == 'wolf':
+                # Wolfling doesn't have any info to give
+                continue
             things_to_find = role.need_others()
             if things_to_find is not None:
                 to_return = []
                 for type_to_check in things_to_find:
                     if type_to_check is None:
                         continue
-                    for other_player, other_role in self.matchup.items():
+                    for other_player, other_role in self.original.items():
                         if isinstance(other_role, type_to_check) and other_player not in centre_cards:
                             to_return.append(other_player)
                 if to_return:
