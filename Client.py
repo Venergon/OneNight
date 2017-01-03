@@ -2,6 +2,7 @@ import base64
 import string
 import random
 
+
 def obfuscate(plain_text, key):
     if len(plain_text) <= len(key):
         plain_text += chr(0) * (len(key) - len(plain_text))
@@ -80,9 +81,9 @@ while True:
             person2 = input("Who is the second person you want to do your action to? (leave blank if N/A) ")
 
             if person2 == "":
-                print_with_key(name +"," + person1, msg_key)
+                print_with_key(name + "," + person1, msg_key)
             else:
-                print_with_key(name +"," + person1 +"," + person2, msg_key)
+                print_with_key(name + "," + person1 + "," + person2, msg_key)
 
     elif action == "r" or action == "receive":
         cipher_text = input("Enter obfuscated message: ")

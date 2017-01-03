@@ -49,3 +49,20 @@ class Card(object):
 
     def change_player(self, player):
         self.player = player
+
+
+class Wolf(Card):
+    def is_legal_action(self, person1, person2):
+        super().is_legal_action(person1, person2)
+
+    def need_others(self):
+        super().need_others()
+
+    def init_text(self):
+        super().init_text()
+
+    def do_action(self, person1=None, person2=None):
+        super().do_action(person1, person2)
+
+    def any_changes(self):
+        super().any_changes()

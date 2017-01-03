@@ -8,6 +8,7 @@ import TerribleCrypto
 
 
 class Game:
+    # Set up the inital roles and players
     def __init__(self, players, roles):
         self.stage = STAGE_BEFORE
         self.players = players
@@ -23,9 +24,11 @@ class Game:
         self.original = {}
         self.killed = []
 
+    # In case you want to change players before starting the game
     def set_players(self, players):
         self.players = players
 
+    # As above if you just want to add some players
     def add_players(self, players):
         self.players += players
 
@@ -33,24 +36,29 @@ class Game:
         if player in self.players:
             self.players.remove(player)
 
+    # As above if you want to change roles
     def set_roles(self, roles):
         self.roles = roles
 
+    # As above if you just want to add some roles
     def add_roles(self, roles):
         self.roles += roles
 
+    # Check if there is at least one player with that team.
     def team_in_play(self, death_team):
         for player in self.players:
             if self.matchup[player].deathTeam == death_team:
                 return True
         return False
 
+    # Checks if a card or card type (eg any werewolf) is owned by at least one player
     def card_in_play(self, card):
         for player in self.players:
             if isinstance(self.matchup[player], card):
                 return True
         return False
 
+    # Assign the roles to each of the players, adding in the three centre cards
     def assign(self):
         if len(self.players) != len(self.roles) - 3:
             raise ValueError('Players and Roles do not match up')
@@ -73,9 +81,11 @@ class Game:
     def peek(self, player):
         return self.matchup[player]
 
+    # Returns an order for things like circle voting
     def order(self):
         return self.arranged_players[0:-3]
 
+    # Finds all of the roles that a card needs for its role text and gives it to the card
     def give_info(self):
         for player, role in self.matchup.items():
             things_to_find = role.need_others()
@@ -90,6 +100,7 @@ class Game:
                 if to_return:
                     role.add_others(to_return)
 
+    # Add the actions for one of the players onto the dict for use once all actions are in
     def add_action(self, player, person1=None, person2=None):
         if self.matchup[player].is_legal_action(person1, person2) and (person1 != person2 or person1 is None):
             self.actions_to_do[player] = (person1, person2)
@@ -106,6 +117,7 @@ class Game:
         role = self.matchup[player]
         return role.init_text() + " " + self.init_win_text(role)
 
+    # Returns the win condition to add onto the end of each role text
     @staticmethod
     def init_win_text(player_role):
         if player_role.win_team == Team.Villager:
@@ -115,12 +127,15 @@ class Game:
         elif player_role.win_team == Team.Tanner:
             return "You are a tanner so you only win if you die."
 
+    # Determines whether everyone has given in their actions
     def actions_for_all(self):
         for player in self.arranged_players:
             if player not in self.actions_to_do:
                 return False
         return True
 
+    # Simulate all of the actions happening in their proper order throughout the night then print the results
+    # Again obfuscated so that the host doesn't accidentally see them
     def do_actions(self):
         if not self.actions_for_all():
                 raise ValueError("Not every player has an action yet")
@@ -131,6 +146,9 @@ class Game:
                 if type(player_role) == role and player not in centre_cards:
                     person1, person2 = self.actions_to_do[player]
                     self.action_returns[player] = player_role.do_action(person1, person2)
+
+        action_returns_list = list(self.action_returns.items())
+        random.shuffle(action_returns_list)
 
         for player_role in self.matchup.values():
             player_role.any_changes()
@@ -144,10 +162,11 @@ class Game:
 
         for player, text in action_returns_list:
             self.print_encrypted_with_key(player, text, self.generate_key(512))
-    
+
     def print_player_action(self, player):
         return self.action_returns[player]
 
+    # Print out text obfuscated so that the host doesn't accidentally see it
     @staticmethod
     def print_encrypted_with_key(player, text, key):
         cipher = TerribleCrypto.obfuscate(text, key)
@@ -158,6 +177,7 @@ class Game:
         print(key)
         print()
 
+    # Generate a key for using in print_obfuscated_with_key
     @staticmethod
     def generate_key(length):
         to_choose_from = string.ascii_letters+string.digits
@@ -167,12 +187,14 @@ class Game:
 
         return "".join(key)
 
+    # Find if everyone has voted
     def votes_for_all(self):
         for player in self.arranged_players:
             if player not in self.votes:
                 return False
         return True
 
+    # Adds a vote from one of the players
     def add_vote(self, voter, votee):
         if voter == votee:
             raise SelfVoteError
@@ -181,6 +203,7 @@ class Game:
         else:
             self.votes[voter] = votee
 
+    # Count up all the votes to determine who dies
     def count_votes(self):
         votes = collections.defaultdict(int)
         for voter, votee in self.votes.items():
@@ -234,6 +257,6 @@ class Game:
                 g.votes = data_modification.text_to_dict(f.readline().strip("\n"))
         except FileNotFoundError:
             pass
-        if g.stage >= STAGE_NIGHT: 
+        if g.stage >= STAGE_NIGHT:
             g.give_info()
         return g
