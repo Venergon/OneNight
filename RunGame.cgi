@@ -259,7 +259,7 @@ def game_done(g, me):
 
     winning_teams = []
     if not killed:
-        if g.card_in_play(Werewolf):
+        if g.card_in_play(Wolf):
             return_list.append("<p>After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
                   "too, as there was still a werewolf.</p>")
             winning_teams = [Team.Werewolf]
