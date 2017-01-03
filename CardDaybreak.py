@@ -45,7 +45,7 @@ class VillageIdiot(Card):
             return "You decide not to activate the device, there's gonna be enough chaos tonight."
         else:
             if person1 == 'left':
-                for player, i in enumerate(self.game.arranged_players):
+                for i, player in enumerate(self.game.arranged_players):
                     # This set of conditions is to make sure not to swap yourself and to wrap around
                     if player == self.original_player:
                         continue
@@ -66,7 +66,7 @@ class VillageIdiot(Card):
                        "haven't been swapped... at least not by your device..."
 
             elif person1 == 'right':
-                for player, i in enumerate(self.game.arranged_players):
+                for i, player in enumerate(self.game.arranged_players):
                     if player == self.original_player:
                         continue
                     elif i != 0:
