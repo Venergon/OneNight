@@ -177,10 +177,10 @@ class MysticWolf(Wolf):
             text_to_return = []
             if person1:
                 text_to_return.append(("Using ancient magic lost to all but a few, you see that {} is actually {}."
-                                       ).format(person1, self.game.matchup(person1)))
+                                       ).format(person1, self.game.peek(person1)))
             if person2:
-                text_to_return.append("As you waiting for sunrise, you see {} running out of the village."
-                                      .format(self.game.matchup(person2)))
+                text_to_return.append("As you wait for sunrise, you see {} running out of the village."
+                                      .format(self.game.peek(person2)))
 
             return "\n".join(text_to_return)
 
@@ -238,7 +238,7 @@ class AlphaWolf(Wolf):
 
             if person2:
                 return ("Along with converting {} into a werewolf, you saw that {} was {}."
-                        ).format(person1, person2, self.game.peek(person2))
+                    ).format(person1, person2, self.game.peek(person2))
             else:
                 return "Excellent, your new apprentice {} is well on their way to becoming a full grown werewolf. " \
                        "Today will be fun..."
