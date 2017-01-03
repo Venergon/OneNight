@@ -14,8 +14,8 @@ class Game:
         self.stage = STAGE_BEFORE
         self.players = players
         self.roles = roles
-        self.role_order = [Werewolf, Minion, Mason, Seer, Robber, Troublemaker,
-                           Drunk, Insomniac, Villager, Tanner, Hunter]
+        self.role_order = [Werewolf, AlphaWolf, MysticWolf, Minion, Mason, Seer, Robber, Troublemaker, VillageIdiot,
+                           Drunk, Insomniac, Villager, Tanner, Hunter, DreamWolf, Wolfling]
         self.action_returns = {}
         self.actions_to_do = {}
         self.votes = {}

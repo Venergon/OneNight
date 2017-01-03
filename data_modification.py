@@ -10,8 +10,8 @@ role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "
                     "Insomniac":Insomniac, "Tanner":Tanner, "Minion":Minion,
 
 
-                    "Wolfling":Wolfling, "Alpha Wolf":AlphaWolf, "Mystic Wolf":MysticWolf, "Village Idiot":VillageIdiot,
-                    "Dream Wolf":DreamWolf}
+                    "Wolfling":Wolfling, "AlphaWolf":AlphaWolf, "MysticWolf":MysticWolf, "VillageIdiot":VillageIdiot,
+                    "DreamWolf":DreamWolf}
 
 
 
