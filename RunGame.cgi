@@ -340,7 +340,7 @@ def game_done(g, me):
 
 def actions_form(g, me):
     if g.stage == STAGE_NIGHT:
-        role = g.matchup[me.zid]
+        role = g.original[me.zid]
         return_list = []
 
         if me.zid in g.actions_to_do:
