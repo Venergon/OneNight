@@ -100,7 +100,7 @@ class Game:
                     if type_to_check is None:
                         continue
                     for other_player, other_role in self.matchup.items():
-                        if isinstance(other_role, type_to_check) and other_player not in centre_cards and other_player != 'wolf':
+                        if isinstance(other_role, type_to_check) and other_player not in centre_cards:
                             to_return.append(other_player)
                 if to_return:
                     role.add_others(to_return)
