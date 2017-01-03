@@ -169,12 +169,7 @@ def voting(g):
                    "deathly howl was heard. It appeared the villagers had chosen "
                    "wisely.").format(" and ".join(total_killed)))
 
-        else:
-            # Villagers lose, werewolves likely win as no werewolf was killed
-            winning_teams = [Team.Werewolf]
-            print("The villagers finally decided on who must be the werewolf. They prepared the nooses and hung {}. "
-                  "Unfortunately, the villagers were not the best at judging character and did not get a werewolf. "
-                  "Looks like it's feeding time...".format(" and ".join(total_killed)))
+
 
         if Team.Tanner in dying_teams:
             # Tanner wins. This does not affect the villagers

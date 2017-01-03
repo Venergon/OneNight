@@ -13,10 +13,6 @@ class Card(object):
     def actions_wanted(self):
         raise NotImplementedError
 
-    @staticmethod
-    def __repr__():
-        return self.__name__
-
     def __repr__(self):
         return "{}(!currentgame!, {}, {})".format(type(self).__name__, repr(self.player), repr(self.original_player))
 

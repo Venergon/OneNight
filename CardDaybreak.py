@@ -2,9 +2,14 @@ from CardTemplate import *
 from DotH import *
 import copy
 
+# TODO: Curator, Revealer, Bodyguard, Witch, Apprentice Seer, Sentinel, Paranomal Investigator, Alpha Wolf
+
 
 # Can move everyone's card either one to the left or one to the right, Townie
 class VillageIdiot(Card):
+    def actions_wanted(self):
+        return [("direction",), None]
+
     def __init__(self, game, player):
         super().__init__(game, player)
         self.win_team = Team.Villager
@@ -31,7 +36,7 @@ class VillageIdiot(Card):
         return "You are the Village Idiot! Always the klutz, you once tripped on your own foot and broke the body " \
                "swap device you were given as a birthday present. Now it is unstable and if activated will move " \
                "the consciousness of everyone but you one body in a direction. You can choose to activate it and " \
-               "move everyone left, move everyone right or not activate it at all (in which case you choose no target."
+               "move everyone left, move everyone right or not activate it at all (in which case you choose no target)."
 
     def do_action(self, person1=None, person2=None):
         if not self.is_legal_action(person1, person2):
@@ -86,6 +91,10 @@ class VillageIdiot(Card):
 
 # Does not wake up with the other werewolves, werewolf
 class DreamWolf(Wolf):
+
+    def actions_wanted(self):
+        return [None]
+
     def __init__(self, game, player):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
@@ -122,6 +131,12 @@ class DreamWolf(Wolf):
 
 # Can view another player's card, Werewolf
 class MysticWolf(Wolf):
+    def actions_wanted(self):
+        if self.others is None:
+            return [('other', 'centre'), ('other',), (None,'centre'), None]
+        else:
+            return [('other',), None]
+
     def __init__(self, game, player):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
@@ -131,17 +146,10 @@ class MysticWolf(Wolf):
         return "THE MYSTERIOUS MYSTIC WOLF"
 
     def is_legal_action(self, person1, person2):
-        if person1 is None or (person1 not in centre_cards and person1 != self.original_player):
-            if person2 is None:
-                return True
-            elif self.others is not None:
-                return False
-            elif person2 not in centre_cards:
-                return False
-            else:
-                return True
-        else:
-            return False
+        person1_valid = (person1 is None or (person1 not in centre_cards and person1 != self.original_player))
+        person2_valid = (person2 is None or (self.others is None and person2 in centre_cards))
+
+        return person1_valid and person2_valid
 
     def need_others(self):
         return [Wolf]
@@ -190,19 +198,16 @@ class AlphaWolf(Wolf):
     def __str__(self):
         return "THE WILY ALPHA WOLF"
 
-    def is_legal_action(self, person1, person2):
-        if person1 is None:
-            return False
-        elif person1 in centre_cards:
-            return False
-        elif isinstance(self.game.matchup[person1], Wolf):
-            return False
-        elif person2 is not None and self.others is not None:
-            return False
-        elif person2 is not None and person2 not in centre_cards:
-            return False
+    def actions_wanted(self):
+        if self.others is None:
+            return [('non_wolf', 'centre'), ('non_wolf',), (None,'centre'), None]
         else:
-            return True
+            return [('non_wolf',), None]
+
+    def is_legal_action(self, person1, person2):
+        person1_valid = (person1 is not None and person1 not in centre_cards and not isinstance(self.game.original[person1], Wolf))
+        person2_valid = (person2 is None or (self.others is None and person2 in centre_cards))
+        return (person1_valid and person2_valid)
 
     def need_others(self):
         return [Wolf]
@@ -216,8 +221,8 @@ class AlphaWolf(Wolf):
 
     def init_text(self):
         if self.others is None:
-            return "You are the Alpha Wolf! You do not currently have any allies however you must pick one person " \
-                   "to convert into a werewolf apprentice (they will have no knowledge of being converted). As well, " \
+            return "You are the Alpha Wolf! You do not currently have any allies however you must pick one villager " \
+                   "to convert into a wolfling (they will have no knowledge of being converted). As well, " \
                    "you may pick one of the centre cards to look at (the conversion is your first target, " \
                    "viewing is your second)."
         else:
@@ -243,29 +248,32 @@ class AlphaWolf(Wolf):
 
 
 # Special role to be used ONLY as the centre wolf card, other than that is effectively a normal werewolf
-class WerewolfApprentice(Wolf):
+class Wolfling(Wolf):
     def __init__(self, game, player):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
         self.death_team = Team.Werewolf
 
     def __str__(self):
-        return "THE UNWITTING WEREWOLF APPRENTICE"
+        return "THE CUTE AND CUDDLY WOLFLING"
+
+    def actions_wanted(self):
+        raise ValueError("The Wolfling should never have actions_wanted called on it")
 
     def need_others(self):
-        raise ValueError("The Werewolf Apprentice should never have need_others called on it")
+        raise ValueError("The Wolfling should never have need_others called on it")
 
     def add_others(self, others):
-        raise ValueError("The Werewolf Apprentice should never have add_others called on it")
+        raise ValueError("The Wolfling should never have add_others called on it")
 
     def init_text(self):
-        raise ValueError("The Werewolf Apprentice should never have init_text called on it")
+        raise ValueError("The Wolfling should never have init_text called on it")
 
     def is_legal_action(self, person1, person2):
-        raise ValueError("The Werewolf Apprentice should never have is_legal_action called on it")
+        raise ValueError("The Wolfling should never have is_legal_action called on it")
 
     def do_action(self, person1=None, person2=None):
-        raise ValueError("The Werewolf Apprentice should never have do_action called on it")
+        raise ValueError("The Wolfling should never have do_action called on it")
 
     def any_changes(self):
         pass

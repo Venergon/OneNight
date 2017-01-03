@@ -364,7 +364,7 @@ def actions_form(g, me):
     <input type="Submit" value="Do Nothing">
 </form>""")
             else:
-                phrase_mapping = {"centre":"a centre card", "other":"another player", "player":"any player"}
+                phrase_mapping = {"centre":"a centre card", "other":"another player", "player":"any player", "non_wolf": "Anyone who isn't a werewolf", None:"Nothing"}
                 if len(option) == 1:
                     return_list.append("""
 <h3>Interact with {}</h3>
@@ -414,7 +414,8 @@ def phrase_to_targets(phrase, g, me):
         return """
         <option value="left">Left</option>
         <option value="centre">Centre</option>
-        <option value="right">Right</option>"""
+        <option value="right">Right</option>
+        <option value="wolf">Wolfling</option>"""
     elif phrase == "other":
         players = copy.copy(g.players)
         players.remove(me.zid)

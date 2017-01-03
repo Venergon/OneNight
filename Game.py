@@ -3,6 +3,7 @@ import string
 import collections
 import data_modification
 from CardBase import *
+from CardDaybreak import *
 from DotH import *
 import TerribleCrypto
 
@@ -67,6 +68,7 @@ class Game:
         self.arranged_roles = copy.copy(self.roles)
         random.shuffle(self.arranged_roles)
         self.matchup = dict(zip(self.arranged_players+['left', 'centre', 'right'], self.arranged_roles))
+        self.matchup["wolf"] = Wolfling
         for player in self.matchup:
             self.matchup[player] = self.matchup[player](self, player)
         self.original = copy.copy(self.matchup)

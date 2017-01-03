@@ -1,4 +1,5 @@
 from CardBase import *
+from CardDaybreak import *
 from constants import *
 from User import User
 from Game import Game
@@ -6,7 +7,11 @@ import os, glob, string, random, shutil, copy
 
 role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "Mason":Mason,
                     "Troublemaker":Troublemaker, "Drunk":Drunk, "Hunter":Hunter, "Seer":Seer,
-                    "Insomniac":Insomniac, "Tanner":Tanner, "Minion":Minion}
+                    "Insomniac":Insomniac, "Tanner":Tanner, "Minion":Minion,
+
+
+                    "Wolfling":Wolfling, "Alpha Wolf":AlphaWolf, "Mystic Wolf":MysticWolf, "Village Idiot":VillageIdiot,
+                    "Dream Wolf":DreamWolf}
 
 
 
