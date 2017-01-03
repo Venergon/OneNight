@@ -27,8 +27,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36298934">
-              <caret line="171" column="14" selection-start-line="171" selection-start-column="14" selection-end-line="171" selection-end-column="14" />
+            <state vertical-scroll-proportion="-6.713523">
+              <caret line="16" column="95" selection-start-line="16" selection-start-column="95" selection-end-line="16" selection-end-column="95" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -712,7 +712,13 @@
       <option name="project" value="LOCAL" />
       <updated>1483446065655</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="debugging&#10;">
+      <created>1483446733947</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1483446733947</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -781,7 +787,8 @@
     <MESSAGE value="fixed action form to also use original rather than matchup" />
     <MESSAGE value="fixed add_action to use original rather than matchup" />
     <MESSAGE value="fixed do_actions to use original rather than matchup" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed do_actions to use original rather than matchup" />
+    <MESSAGE value="debugging&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="debugging&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1250,8 +1257,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36298934">
-          <caret line="171" column="14" selection-start-line="171" selection-start-column="14" selection-end-line="171" selection-end-column="14" />
+        <state vertical-scroll-proportion="-6.713523">
+          <caret line="16" column="95" selection-start-line="16" selection-start-column="95" selection-end-line="16" selection-end-column="95" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
