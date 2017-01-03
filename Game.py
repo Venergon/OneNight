@@ -169,6 +169,7 @@ class Game:
             self.print_encrypted_with_key(player, text, self.generate_key(512))
 
     def print_player_action(self, player):
+        print(self.original)
         return self.action_returns[player]
 
     # Print out text obfuscated so that the host doesn't accidentally see it
