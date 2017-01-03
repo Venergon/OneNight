@@ -222,7 +222,7 @@ class MysticWolf(Wolf):
                 text_to_return.append("As you wait for sunrise, you see {} running out of the village."
                                       .format(self.game.peek(person2)))
 
-            return "\n".join(text_to_return)
+            return " ".join(text_to_return)
 
     def any_changes(self):
         pass

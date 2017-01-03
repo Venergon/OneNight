@@ -119,7 +119,7 @@ class Game:
                                               self.init_win_text(player_role), self.generate_key(512))
 
     def player_role_text(self, player):
-        role = self.matchup[player]
+        role = self.original[player]
         return role.init_text() + " " + self.init_win_text(role)
 
     # Returns the win condition to add onto the end of each role text
