@@ -72,7 +72,7 @@ class Game:
         for player in self.matchup:
             self.matchup[player] = self.matchup[player](self, player)
         self.original = copy.copy(self.matchup)
-        self.giveinfo()
+        self.give_info()
         self.stage = STAGE_NIGHT
 
     def swap(self, player1, player2):
