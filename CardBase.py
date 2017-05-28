@@ -2,10 +2,10 @@ from CardTemplate import *
 from DotH import *
 import copy
 
-"TODO:" \
-    "Doppelganger (lolnope)"
+# TODO: Doppelganger if I ever get around to doing it
 
 
+# No special action, Townie
 class Villager(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -15,6 +15,9 @@ class Villager(Card):
     def __str__(self):
         return "a lowly Villager"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -22,7 +25,7 @@ class Villager(Card):
             return True
 
     def need_others(self):
-        return None
+        return [None]
 
     def add_others(self, others):
         raise NoKnowledgeError
@@ -42,6 +45,7 @@ class Villager(Card):
         pass
 
 
+# Can look at one other player's card or two of the centre cards, Townie
 class Seer(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -50,6 +54,9 @@ class Seer(Card):
 
     def __str__(self):
         return "the mysterious Seer"
+
+    def actions_wanted(self):
+        return [("other", ), ("centre", "centre"), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None and person2 is None:
@@ -86,6 +93,7 @@ class Seer(Card):
         pass
 
 
+# Can swap two other players' cards, Townie
 class Troublemaker(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -94,6 +102,9 @@ class Troublemaker(Card):
 
     def __str__(self):
         return "the mischievous Troublemaker"
+
+    def actions_wanted(self):
+        return [("other", "other"), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None:
@@ -132,6 +143,7 @@ class Troublemaker(Card):
         pass
 
 
+# Can steal someone else's card and then look at it, Townie
 class Robber(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -140,6 +152,9 @@ class Robber(Card):
 
     def __str__(self):
         return "the dastardly Robber"
+
+    def actions_wanted(self):
+        return [("other",), None]
 
     def is_legal_action(self, person1, person2):
         if person1 is None:
@@ -176,6 +191,7 @@ class Robber(Card):
         pass
 
 
+# Knows other Mason, Townie
 class Mason(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -184,6 +200,9 @@ class Mason(Card):
 
     def __str__(self):
         return "an ominous Mason"
+
+    def actions_wanted(self):
+        return [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
@@ -219,6 +238,7 @@ class Mason(Card):
         pass
 
 
+# Must swap their card with a centre card, Townie
 class Drunk(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -227,6 +247,9 @@ class Drunk(Card):
 
     def __str__(self):
         return "the helpless Drunk"
+
+    def actions_wanted(self):
+        return [("centre",)]
 
     def is_legal_action(self, person1, person2):
         if person1 is None or person2 is not None:
@@ -258,6 +281,7 @@ class Drunk(Card):
         pass
 
 
+# If they are killed they kill who they vote for, Townie
 class Hunter(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -266,6 +290,9 @@ class Hunter(Card):
 
     def __str__(self):
         return "the courageous Hunter"
+
+    def actions_wanted(self):
+        return [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
@@ -294,6 +321,7 @@ class Hunter(Card):
         pass
 
 
+# Sees their final role as the last thing in the night, Townie
 class Insomniac(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -302,6 +330,9 @@ class Insomniac(Card):
 
     def __str__(self):
         return "the irritable Insomniac"
+
+    def actions_wanted(self):
+        [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
@@ -334,7 +365,8 @@ class Insomniac(Card):
         pass
 
 
-class Werewolf(Card):
+# Can see other werewolves, if there is only one werewolf they can look at a centre card, Werewolf
+class Werewolf(Wolf):
     def __init__(self, game, player):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
@@ -342,6 +374,12 @@ class Werewolf(Card):
 
     def __str__(self):
         return "A BLOODY WEREWOLF"
+
+    def actions_wanted(self):
+        if self.others is not None:
+            return [None]
+        else:
+            return [("centre",), None]
 
     def is_legal_action(self, person1, person2):
         if self.others is not None:
@@ -357,11 +395,11 @@ class Werewolf(Card):
             return True
 
     def need_others(self):
-        return [Werewolf]
+        return [Wolf]
 
     def add_others(self, others):
         self.others = copy.deepcopy(others)
-        if self.original_player not in centre_cards:
+        if self.original_player in self.others:
             self.others.remove(self.original_player)
         if not self.others:
             self.others = None
@@ -380,9 +418,9 @@ class Werewolf(Card):
         elif self.others is not None:
             return "You get a good night's sleep in preparation for tomorrow. Just one more day and this town is " \
                    "yours; don't blow it!"
-        elif type(self.game.peek(person1)) is Werewolf:
-            return "As you are preparing for tomorrow night, you see another werewolf, deserting the mission. " \
-                   "You realise your mission is going to be a lot tougher..."
+        elif isinstance(self.game.peek(person1), Wolf):
+            return ("As you are preparing for tomorrow night, you see another {}, deserting the mission. "
+                    "You realise your mission is going to be a lot tougher...").format(self.game.peek(person1))
         else:
             return ("You scan the area, ready to pounce on any unsuspecting villagers. Luckily for you, {} chose "
                     "tonight of all nights to sneak out to their lover. You pounce and slowly rip them apart limb by "
@@ -393,6 +431,7 @@ class Werewolf(Card):
         pass
 
 
+# Sees the werewolves, dying does not cause a werewolf loss, Werewolf
 class Minion(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -402,6 +441,9 @@ class Minion(Card):
     def __str__(self):
         return "THE TRAITOROUS MINION"
 
+    def actions_wanted(self):
+        return [None]
+
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
             return False
@@ -409,7 +451,7 @@ class Minion(Card):
             return True
 
     def need_others(self):
-        return [Werewolf]
+        return [Wolf]
 
     def add_others(self, others):
         self.others = copy.deepcopy(others)
@@ -430,10 +472,11 @@ class Minion(Card):
                    'will be fun...'
 
     def any_changes(self):
-        if not self.game.card_in_play(Werewolf):
+        if not self.game.card_in_play(Wolf):
             self.death_team = Team.Werewolf
 
 
+# Wants to die, Independent
 class Tanner(Card):
     def __init__(self, game, player):
         super().__init__(game, player)
@@ -442,6 +485,9 @@ class Tanner(Card):
 
     def __str__(self):
         return "the pitiful Tanner"
+
+    def actions_wanted(self):
+        return [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:

@@ -1,5 +1,7 @@
 import base64
 
+# Don't roll your own crypto kids, this is not intended to be used for actually securing messages, just obfuscating
+
 
 def obfuscate(plain_text, key):
     if len(plain_text) <= len(key):
