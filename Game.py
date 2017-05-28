@@ -9,6 +9,7 @@ import TerribleCrypto
 
 
 class Game:
+
     # Set up the inital roles and players
     def __init__(self, players, roles):
         self.stage = STAGE_BEFORE

@@ -2,7 +2,7 @@ from CardBase import *
 from CardDaybreak import *
 from constants import *
 from User import User
-from Game import Game
+import Game
 import os, glob, string, random, shutil, copy
 
 role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "Mason":Mason,
@@ -210,7 +210,7 @@ def token_to_user(token):
 def join_game(parameters, me):
     if not me:
         return
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
 
     if me.zid not in g.players and g.stage == STAGE_BEFORE:
         g.add_players([me.zid])
@@ -221,7 +221,7 @@ def leave_game(parameters, me):
     if not me:
         return
 
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
 
     if me.zid in g.players and g.stage == STAGE_BEFORE:
         g.remove_player(me.zid)
@@ -231,7 +231,7 @@ def start_game(parameters, me):
     if not me:
         return
 
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
 
     if me.zid == "venergon" and g.stage == STAGE_BEFORE:
         g.assign()
@@ -241,7 +241,7 @@ def change_roles(parameters, me):
     if not me:
         return
 
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
 
     if me.zid == "venergon" and g.stage == STAGE_BEFORE:
         roles = parameters.getvalue("roles", "[]")
@@ -250,7 +250,7 @@ def change_roles(parameters, me):
         g.save("curr.game")
 
 def submit_action(parameters, me):
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
     if not me or me.zid not in g.players or g.stage != STAGE_NIGHT:
         return
     
@@ -262,7 +262,7 @@ def submit_action(parameters, me):
     g.save("curr.game")
 
 def vote(parameters, me):
-    g = Game.load("curr.game")
+    g = Game.Game.load("curr.game")
     
     if not me or me.zid not in g.players or g.stage != STAGE_DAY:
         return

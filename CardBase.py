@@ -1,6 +1,9 @@
 from CardTemplate import *
 from DotH import *
+from Team import Team
 import copy
+
+centre_cards = ["left", "centre", "right", "wolf"]
 
 # TODO: Doppelganger if I ever get around to doing it
 
@@ -85,9 +88,9 @@ class Seer(Card):
                    "chose to lay low for a while."
         elif person2 is not None:
             return "You sensed that both {} ({} card) and {} ({} card) are not " \
-                    "currently in town".format(self.game.peek(person1), person1, self.game.peek(person2), person2)
+                    "currently in town".format(str(self.game.peek(person1)), str(person1), str(self.game.peek(person2)), str(person2))
         else:
-            return "You sensed that {} is in fact {}".format(person1, self.game.peek(person1))
+            return "You sensed that {} is in fact {}".format(str(person1), str(self.game.peek(person1)))
 
     def any_changes(self):
         pass
@@ -137,7 +140,7 @@ class Troublemaker(Card):
             self.game.swap(person1, person2)
             return "Ah, the most fun of practical jokes, the forced body swap. {} and {} have now changed bodies " \
                    "and roles, although you didn't get a good enough look to see " \
-                   "what either of them are".format(person1, person2)
+                   "what either of them are".format(str(person1), str(person2))
 
     def any_changes(self):
         pass
@@ -185,7 +188,7 @@ class Robber(Card):
         else:
             original_player = self.original_player
             self.game.swap(person1, self.original_player)
-            return "You have stolen {}'s card and are now {}!".format(person1, self.game.peek(original_player))
+            return "You have stolen {}'s card and are now {}!".format(str(person1), self.game.peek(original_player))
 
     def any_changes(self):
         pass
@@ -225,7 +228,7 @@ class Mason(Card):
             return "You are a Mason! The other mason appears to have gone missing so you are on your own for now."
         else:
             return ("You are a Mason! You and {} have known each other for a long time and know that neither of you "
-                    "could ever be werewolves").format(", ".join(self.others))
+                    "could ever be werewolves").format(", ".join(map(lambda x: str(x), self.others)))
 
     def do_action(self, person1=None, person2=None):
         if not self.is_legal_action(person1, person2):
@@ -359,7 +362,7 @@ class Insomniac(Card):
                        "still you."
             else:
                 return "You stayed up all night alert for any changes. Suddenly a weird sensation comes over you. " \
-                       "You feel a lot like {}!".format(self.game.peek(self.original_player))
+                       "You feel a lot like {}!".format(str(self.game.peek(self.original_player)))
 
     def any_changes(self):
         pass
@@ -410,7 +413,7 @@ class Werewolf(Wolf):
                    "choose a card from the centre to look at. You win with the werewolves so make sure you do not die."
         else:
             return ("You are a Werewolf! You and the other werewolves ({}) must work to make sure none of you "
-                    "are killed.").format(", ".join(self.others))
+                    "are killed.").format(", ".join(map(lambda x: str(x), self.others)))
 
     def do_action(self, person1=None, person2=None):
         if not self.is_legal_action(person1, person2):
@@ -420,12 +423,12 @@ class Werewolf(Wolf):
                    "yours; don't blow it!"
         elif isinstance(self.game.peek(person1), Wolf):
             return ("As you are preparing for tomorrow night, you see another {}, deserting the mission. "
-                    "You realise your mission is going to be a lot tougher...").format(self.game.peek(person1))
+                    "You realise your mission is going to be a lot tougher...").format(str(self.game.peek(person1)))
         else:
             return ("You scan the area, ready to pounce on any unsuspecting villagers. Luckily for you, {} chose "
                     "tonight of all nights to sneak out to their lover. You pounce and slowly rip them apart limb by "
                     "limb. Perfect, you now have a full stomach and a flawless "
-                    "disguise...").format(self.game.peek(person1))
+                    "disguise...").format(str(self.game.peek(person1)))
 
     def any_changes(self):
         pass
@@ -462,7 +465,7 @@ class Minion(Card):
                    "and have turned yourself into a werewolf."
         else:
             return ("You are the Minion! You are working secretly to help the werewolves ({}) and don't care if you "
-                    "yourself die. The werewolves do not know who you are.").format(", ".join(self.others))
+                    "yourself die. The werewolves do not know who you are.").format(", ".join(map(lambda x: str(x), self.others)))
 
     def do_action(self, person1=None, person2=None):
         if not self.is_legal_action(person1, person2):
