@@ -12,9 +12,20 @@ role_conversions = {"villager":Villager, "werewolf":Werewolf, "robber":Robber, "
 
 
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-There are a number of utility commands being showcased here.'''
+description = '''!help: display help message
+
+To do in the server:
+!new: start a new game
+!start: start the game once everyone has joined
+!end: end the current game
+!status: display the status of the game
+!join: join the current game
+!leave: leave the current game
+!role `card`: add a copy of `card` to the game
+
+To do in PM:
+!target `gameId` [`player1`] [`player2`]: use your role action from the game with id `gameId` on players 1 and 2. Leave the players blank if you don't/can't target multiple people
+!vote `gameId` `player`: vote for `player` to die in the game with id `gameId`'''
 bot = commands.Bot(command_prefix='!', description=description)
 
 def save_game(game, server):
@@ -46,6 +57,7 @@ def new(ctx):
     g = load_game(ctx.message.server)
     if g is None:
         g = Game([], [])
+        g.channel = ctx.message.channel
         save_game(g, ctx.message.server)
         yield from bot.say("New game created")
     else:
@@ -179,8 +191,9 @@ def target(ctx, server_id: str, *args):
             if g.actions_for_all():
                 g.do_actions()
                 save_game(g, server)
-                yield from bot.send_message(server, "Game has progressed to day")
-                yield from bot.send_message(server, "Send in votes via person message whenever you want to")
+                yield from bot.send_message(g.channel, "Game has progressed to day")
+                yield from bot.send_message(g.channel, "Send in votes via person message whenever you want to")
+                yield from bot.send_message(g.channel, "vote with `!vote {} <player>`".format(server_id))
 
                 for player in g.players:
                     yield from bot.send_message(player, g.print_player_action(player))
@@ -238,11 +251,11 @@ def vote(ctx, server_id: str, votee: str):
                 if not killed:
                     # Circle vote, if a werewolf is alive then werewolves win otherwise villagers win
                     if g.card_in_play(Werewolf):
-                        yield from bot.send_message(server, "After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
+                        yield from bot.send_message(g.channel, "After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
                               "too, as there was still a werewolf.")
                         winning_teams = [Team.Werewolf]
                     else:
-                        yield from bot.send_message(server, "Eventually, the villagers realised there was not a werewolf in their midst and did not kill anyone.")
+                        yield from bot.send_message(g.channel, "Eventually, the villagers realised there was not a werewolf in their midst and did not kill anyone.")
                         winning_teams = [Team.Villager]
                 else:
                     total_killed = []
@@ -280,31 +293,34 @@ def vote(ctx, server_id: str, votee: str):
                     if Team.Werewolf in dying_teams:
                         # Villagers win as they killed a werewolf
                         winning_teams = [Team.Villager]
-                        yield from bot.send_message(server, "The villagers finally decided on who must be the werewolf. They prepared the nooses and hung {}. "
-                              "Unfortunately, the villagers were not the best at judging character and did not get a werewolf. "
-                              "Looks like it's feeding time...".format(" and ".join(map(lambda x: x.mention, total_killed))))
+                        yield from bot.send_message(g.channel, ("After some reasoned arguments, the villagers finally chose to kill {}. As the blood spurted, a "
+                            "deathly howl was heard. It appeared the villagers had chosen "
+                            "wisely.").format(" and ".join(map(lambda x: x.mention, total_killed))))
+
+
+
                     else:
                         winning_teams = [Team.Werewolf]
-                        yield from bot.send_message(server, ("After some reasoned arguments, the villagers finally chose to kill {}. As the blood spurted, a "
-                               "deathly howl was heard. It appeared the villagers had chosen "
-                               "wisely.").format(" and ".join(map(lambda x: x.mention, total_killed))))
 
 
+                        yield from bot.send_message(g.channel, "The villagers finally decided on who must be the werewolf. They prepared the nooses and hung {}. "
+                                "Unfortunately, the villagers were not the best at judging character and did not get a werewolf. "
+                                "Looks like it's feeding time...".format(" and ".join(map(lambda x: x.mention, total_killed))))
 
-                    if Team.Tanner in dying_teams:
-                        # Tanner wins. This does not affect the villagers
-                        winning_teams.append(Team.Tanner)
-                        if Team.Werewolf in winning_teams:
-                            # Werewolves lose because they must not let the tanner die
-                            winning_teams.remove(Team.Werewolf)
-                            yield from bot.send_message(server, "However, a horrible stench filled the air. It turned out that the Tanner had been hung. This "
-                                  "sent the werewolves into a blind raging, leading them to decimate the whole town but also "
-                                  "ruining their appetite. Looks like everyone was unfortunate, except for the tanner.")
-                        else:
-                            yield from bot.send_message(server, "But along with the werewolf, the villagers had also hung up the Tanner. The villagers moved as "
-                                  "fast as possible to bury the Tanner. And thus the villagers survived, with little more problems "
-                                  "than an irritated nose. And for once in their life the Tanner achieved what they wanted. Looks "
-                                  "like all the humans live happily ever after...")
+                        if Team.Tanner in dying_teams:
+                            # Tanner wins. This does not affect the villagers
+                            winning_teams.append(Team.Tanner)
+                            if Team.Werewolf in winning_teams:
+                                # Werewolves lose because they must not let the tanner die
+                                winning_teams.remove(Team.Werewolf)
+                                yield from bot.send_message(g.channel, "However, a horrible stench filled the air. It turned out that the Tanner had been hung. This "
+                                        "sent the werewolves into a blind raging, leading them to decimate the whole town but also "
+                                        "ruining their appetite. Looks like everyone was unfortunate, except for the tanner.")
+                            else:
+                                yield from bot.send_message(g.channel, "But along with the werewolf, the villagers had also hung up the Tanner. The villagers moved as "
+                                        "fast as possible to bury the Tanner. And thus the villagers survived, with little more problems "
+                                        "than an irritated nose. And for once in their life the Tanner achieved what they wanted. Looks "
+                                        "like all the humans live happily ever after...")
 
                 winners = []
                 losers = []
@@ -318,8 +334,8 @@ def vote(ctx, server_id: str, votee: str):
                             losers.append(player.mention+" "+str(role))
 
                 # Show who won and lost
-                yield from bot.send_message(server, "The winners were: {}".format(", ".join(winners)))
-                yield from bot.send_message(server, "The losers were: {}".format(", ".join(losers)))
+                yield from bot.send_message(g.channel, "The winners were: {}".format(", ".join(winners)))
+                yield from bot.send_message(g.channel, "The losers were: {}".format(", ".join(losers)))
 
                 # Print out everyone's original roles
                 origins = []
@@ -328,7 +344,7 @@ def vote(ctx, server_id: str, votee: str):
                         origins.append(player+" "+str(role))
                     else:
                         origins.append(player.mention+" "+str(role))
-                yield from bot.send_message(server, "The original roles were: {}".format(", ".join(origins)))
+                yield from bot.send_message(g.channel, "The original roles were: {}".format(", ".join(origins)))
 
 
 
@@ -348,17 +364,12 @@ def start(ctx):
             save_game(g, ctx.message.server)
             for player in g.players:
                 yield from bot.send_message(player, g.player_role_text(player))
+                yield from bot.send_message(player, "Do your action with `!target {} <player1> <player2>` (without the anglebrackets)".format(ctx.message.server.id))
+                yield from bot.send_message(player, "You can target the centre cards as 'left', 'right' and 'centre' and you should leave players blank if your role tells you to target fewer than 2 people")
+                yield from bot.send_message(player, "the players are {}".format(", ".join(map(lambda x: x.name, g.players))))
 
         except ValueError:
             yield from bot.say("There aren't the right number of roles for players (there should be players+3 roles)")
- 
-
-@bot.command(pass_context=True)
-@asyncio.coroutine
-def set_stage(ctx, stage: int):
-    g = load_game(ctx.message.server)
-    g.stage = stage
-    save_game(g, ctx.message.server)
 
 
 bot.run(open("secret.txt", "r").read().strip())
