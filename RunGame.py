@@ -2,11 +2,6 @@ from Game import *
 from CardBase import *
 import TerribleCrypto
 
-role_conversions = {"Villager":Villager, "Werewolf":Werewolf, "Robber":Robber, "Mason":Mason,
-                    "Troublemaker":Troublemaker, "Drunk":Drunk, "Hunter":Hunter, "Seer":Seer,
-                    "Insomniac":Insomniac, "Tanner":Tanner, "Minion":Minion}
-
-
 def setup_game():
     # Get all of the player names, comma separated
     players_string = input("Choose the players: ")

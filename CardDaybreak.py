@@ -15,6 +15,8 @@ class VillageIdiot(Card):
         self.win_team = Team.Villager
         self.death_team = Team.Villager
 
+        self.order_num = 7.2
+
     def __str__(self):
         return "The chaotic village idiot"
 
@@ -95,6 +97,8 @@ class ApprenticeSeer(Card):
         self.win_team = Team.Villager
         self.death_team = Team.Villager
 
+        self.order_num = 5.2
+
     def __str__(self):
         return "the curious Apprentice Seer"
 
@@ -131,7 +135,6 @@ class ApprenticeSeer(Card):
 
 # Does not wake up with the other werewolves, werewolf
 class DreamWolf(Wolf):
-
     def actions_wanted(self):
         return [None]
 
@@ -181,6 +184,8 @@ class MysticWolf(Wolf):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
         self.death_team = Team.Werewolf
+
+        self.order_num = 2.3
 
     def __str__(self):
         return "THE MYSTERIOUS MYSTIC WOLF"
@@ -234,6 +239,8 @@ class AlphaWolf(Wolf):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
         self.death_team = Team.Werewolf
+
+        self.order_num = 2.2
 
     def __str__(self):
         return "THE WILY ALPHA WOLF"

@@ -9,13 +9,12 @@ import TerribleCrypto
 
 
 class Game:
+
     # Set up the inital roles and players
     def __init__(self, players, roles):
         self.stage = STAGE_BEFORE
         self.players = players
         self.roles = roles
-        self.role_order = [Werewolf, AlphaWolf, MysticWolf, Minion, Mason, Seer, ApprenticeSeer, Robber, Troublemaker, VillageIdiot,
-                           Drunk, Insomniac, Villager, Tanner, Hunter, DreamWolf, Wolfling]
         self.action_returns = {}
         self.actions_to_do = {}
         self.votes = {}
@@ -146,7 +145,8 @@ class Game:
                 raise ValueError("Not every player has an action yet")
 
         original_original = copy.copy(self.original)
-        for role in self.role_order:
+        self.roles.sort(lambda x: x.order_num)
+        for role in self.roles:
             for player, player_role in original_original.items():
                 if type(player_role) == role and player not in centre_cards:
                     person1, person2 = self.actions_to_do[player]

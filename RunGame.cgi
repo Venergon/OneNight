@@ -13,6 +13,12 @@ from Game import Game
 from DotH import *
 from CardBase import *
 
+role_conversions = {"villager":Villager, "werewolf":Werewolf, "robber":Robber, "mason":Mason,
+                    "troublemaker":Troublemaker, "drunk":Drunk, "hunter":Hunter, "seer":Seer,
+                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion}
+
+
+
 def main():
     debug = False
 
