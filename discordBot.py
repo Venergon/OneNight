@@ -1,14 +1,19 @@
 import discord
 import asyncio
 import pickle
+import re
+
 from DotH import *
 from CardBase import *
+from CardDaybreak import *
 from discord.ext import commands
 from Game import Game
 
 role_conversions = {"villager":Villager, "werewolf":Werewolf, "robber":Robber, "mason":Mason,
                     "troublemaker":Troublemaker, "drunk":Drunk, "hunter":Hunter, "seer":Seer,
-                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion}
+                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion, "alphawolf": AlphaWolf,
+                    "mnightwolfalan": MysticWolf, "apprenticeseer": ApprenticeSeer,
+                    "villageidiot":VillageIdiot, "dreamwolf":DreamWolf}
 
 
 

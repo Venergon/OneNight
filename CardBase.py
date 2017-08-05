@@ -54,6 +54,7 @@ class Seer(Card):
         super().__init__(game, player)
         self.win_team = Team.Villager
         self.death_team = Team.Villager
+        self.order_num = 5
 
     def __str__(self):
         return "the mysterious Seer"
@@ -102,6 +103,7 @@ class Troublemaker(Card):
         super().__init__(game, player)
         self.win_team = Team.Villager
         self.death_team = Team.Villager
+        self.order_num = 7
 
     def __str__(self):
         return "the mischievous Troublemaker"
@@ -152,6 +154,7 @@ class Robber(Card):
         super().__init__(game, player)
         self.win_team = Team.Villager
         self.death_team = Team.Villager
+        self.order_num = 6
 
     def __str__(self):
         return "the dastardly Robber"
@@ -248,6 +251,8 @@ class Drunk(Card):
         self.win_team = Team.Villager
         self.death_team = Team.Villager
 
+        self.order_num = 8
+
     def __str__(self):
         return "the helpless Drunk"
 
@@ -331,6 +336,8 @@ class Insomniac(Card):
         self.win_team = Team.Villager
         self.death_team = Team.Villager
 
+        self.order_num = 9
+
     def __str__(self):
         return "the irritable Insomniac"
 
@@ -374,6 +381,7 @@ class Werewolf(Wolf):
         super().__init__(game, player)
         self.win_team = Team.Werewolf
         self.death_team = Team.Werewolf
+        self.order_num = 2
 
     def __str__(self):
         return "A BLOODY WEREWOLF"

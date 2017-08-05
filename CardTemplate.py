@@ -7,6 +7,8 @@ class Card(object):
         self.death_team = None
         self.others = None
 
+        self.order_num = 1000 # For a person that has no role, might as well put it at the end
+
     def __str__(self):
         return "a generic character"
 
