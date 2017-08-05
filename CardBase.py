@@ -283,7 +283,7 @@ class Drunk(Card):
         else:
             self.game.swap(person1, self.original_player)
             return "You stumble out of bed with a mind numbing hangover. You do not remember who or what you are " \
-                   "but one thing is for sure: you are never going drinking again."
+                   "but one thing is for sure - you are never going drinking again."
 
     def any_changes(self):
         pass

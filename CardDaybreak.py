@@ -1,5 +1,6 @@
 from CardTemplate import *
 from DotH import *
+from Team import Team
 import copy
 
 # TODO: Curator, Revealer, Bodyguard, Witch, Sentinel, Paranomal Investigator
@@ -46,6 +47,7 @@ class VillageIdiot(Card):
         elif person1 is None:
             return "You decide not to activate the device, there's gonna be enough chaos tonight."
         else:
+            # TODO : These swaps do not give a proper rotate, must fix
             if person1 == 'left':
                 for i, player in enumerate(self.game.arranged_players):
                     # This set of conditions is to make sure not to swap yourself and to wrap around
