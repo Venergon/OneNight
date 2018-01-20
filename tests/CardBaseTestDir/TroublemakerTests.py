@@ -6,8 +6,8 @@ class TroublemakerTests(CardTestDefault.CardTestDefault):
         return Troublemaker
 
     def test_two_targets(self):
-        expected_order = ["player2", "player1", "self", "left", "centre", "right"]
+        expected_order = ["player2", "player1", "self", "left", "centre", "right", "wolf"]
 
         self.card.do_action("player1", "player2")
 
-        self.assert_resulting_order(expected_order)
+        self.assert_order(expected_order)

@@ -23,7 +23,7 @@ class CardTestDefault(unittest.TestCase):
         self.card = self.game.matchup["self"]
 
         # The original order that the cards were dealt out with, to compare with the new order after a change
-        self.original_order = ["player1", "player2", "self", "left", "centre", "right"]
+        self.original_order = ["player1", "player2", "self", "left", "centre", "right", "wolf"]
 
     def get_card_order(self):
         return [
@@ -38,8 +38,12 @@ class CardTestDefault(unittest.TestCase):
         return card.player
 
     # Asserts that the new order of cards is the same as the order that we expect
-    def assert_resulting_order(self, expected):
-        self.assertEqual(self.get_card_order(), expected)
+    def assert_order(self, expected, actual = None):
+        # If actual is None then we assume it's using the main game
+        if actual is None:
+            actual = self.get_card_order()
+
+        self.assertEqual(actual, expected)
 
     # Checks that one piece of text contains an expected substring, ignoring case
     def assert_contains(self, text, expected, msg=None):
@@ -52,7 +56,7 @@ class CardTestDefault(unittest.TestCase):
     def test_no_targets(self):
         self.card.do_action(None, None)
 
-        self.assert_resulting_order(self.original_order)
+        self.assert_order(self.original_order)
 
     # All other actions are assumed to be illegal, any subclasses should override any legal actions
     def test_one_target(self):
@@ -66,7 +70,7 @@ class CardTestDefault(unittest.TestCase):
 
     def test_one_centre(self):
         with self.assertRaises(IsNotLegalError):
-            self.card.do_action("left", None)
+            self.card.do_action("centre", None)
 
     def test_two_centres(self):
         with self.assertRaises(IsNotLegalError):
@@ -98,10 +102,10 @@ class CardTestDefault(unittest.TestCase):
         # then add_others should be an exception, 
         # otherwise add_others should work fine
         if self.card.need_others():
-            self.card.add_others(['player1'])
+            self.card.add_others(['player1', 'self'])
         else:
             with self.assertRaises(NoKnowledgeError):
-                self.card.add_others(['player1'])
+                self.card.add_others(['player1', 'self'])
 
     def test_init_text(self):
         self.assertIsInstance(self.card.init_text(), str)

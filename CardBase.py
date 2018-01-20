@@ -342,7 +342,7 @@ class Insomniac(Card):
         return "the irritable Insomniac"
 
     def actions_wanted(self):
-        [None]
+        return [None]
 
     def is_legal_action(self, person1, person2):
         if person1 is not None or person2 is not None:
@@ -428,7 +428,7 @@ class Werewolf(Wolf):
     def do_action(self, person1=None, person2=None):
         if not self.is_legal_action(person1, person2):
             raise IsNotLegalError
-        elif self.others is not None:
+        elif person1 is None:
             return "You get a good night's sleep in preparation for tomorrow. Just one more day and this town is " \
                    "yours; don't blow it!"
         elif isinstance(self.game.peek(person1), Wolf):
