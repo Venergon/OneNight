@@ -42,7 +42,7 @@ class VillageIdiotTests(CardTestDefault.CardTestDefault):
 
         card = self.game.original['self']
 
-        card.do_action('left', None)
+        card.do_action('right', None)
 
         self.assert_order(expected_order)
 

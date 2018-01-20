@@ -47,46 +47,40 @@ class VillageIdiot(Card):
         elif person1 is None:
             return "You decide not to activate the device, there's gonna be enough chaos tonight."
         else:
-            # TODO : These swaps do not give a proper rotate, must fix
+            # Find all of the players so we know which things to swap
+            other_players = []
+
+            for player in self.game.arranged_players:
+                # This set of conditions is to make sure not to swap yourself and to wrap around
+                if player == self.original_player:
+                    continue
+                else:
+                    other_players.append(player)
+
             if person1 == 'left':
-                for i, player in enumerate(self.game.arranged_players):
-                    # This set of conditions is to make sure not to swap yourself and to wrap around
-                    if player == self.original_player:
-                        continue
-                    elif i != len(self.game.arranged_players)-1:
-                        if self.game.arranged_players[i+1] == self.original_player:
-                            if i+1 != len(self.game.arranged_players)-1:
-                                self.game.swap(player, self.game.arranged_players[i+2])
-                            else:
-                                self.game.swap(player, self.game.arranged_players[0])
-                        else:
-                            self.game.swap(player, self.game.arranged_players[i+1])
-                    else:
-                        if self.game.arranged_players[0] == self.original_player:
-                            self.game.swap(player, self.game.arranged_players[1])
-                        else:
-                            self.game.swap(player, self.game.arranged_players[0])
+                # Swap from the left to the right, this will cause everyone to move to the left
+                # Ignore swapping the last player with the first as that will actually put the second player last
+                previous_player = None
+                for player in reversed(other_players):
+                    if previous_player is not None:
+                        self.game.swap(previous_player, player)
+
+                    previous_player = player
+
                 return "You activate the device and swap everyone's roles one to the left. You however feel like you " \
                        "haven't been swapped... at least not by your device..."
 
             elif person1 == 'right':
-                for i, player in enumerate(self.game.arranged_players):
-                    if player == self.original_player:
-                        continue
-                    elif i != 0:
-                        if self.game.arranged_players[i-1] == self.original_player:
-                            if i-1 != 0:
-                                self.game.swap(player, self.game.arranged_players[i-2])
-                            else:
-                                self.game.swap(player, self.game.arranged_players[-1])
-                        else:
-                            self.game.swap(player, self.game.arranged_players[i-1])
-                    else:
-                        if self.game.arranged_players[-1] == self.original_player:
-                            self.game.swap(player, self.game.arranged_players[-2])
-                        else:
-                            self.game.swap(player, self.game.arranged_players[-1])
-                return "You activate the device and swap everyone's roles one to the left. You however feel like you " \
+                # Do the same as for moving to the left, but instead start from the right and move left
+                previous_player = None
+                for player in other_players:
+                    if previous_player is not None:
+                        self.game.swap(previous_player, player)
+
+                    previous_player = player
+
+
+                return "You activate the device and swap everyone's roles one to the right. You however feel like you " \
                        "haven't been swapped... at least not by your device..."
 
     def any_changes(self):
