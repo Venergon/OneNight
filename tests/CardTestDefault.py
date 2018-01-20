@@ -34,7 +34,7 @@ class CardTestDefault(unittest.TestCase):
 
     # Works out which player owns a card, based on its original owner
     def get_player_for_card(self, original_owner):
-        card = self.game.matchup[original_owner]
+        card = self.game.original[original_owner]
         return card.player
 
     # Asserts that the new order of cards is the same as the order that we expect
@@ -46,7 +46,7 @@ class CardTestDefault(unittest.TestCase):
         text = text.lower()
         expected = expected.lower()
 
-        self.assertTrue(expected in text, msg)
+        self.assertIn(expected, text, msg)
 
     # No targets is generally assumed to be fine and not do anything, subclasses will need to override if doing nothing is illegal
     def test_no_targets(self):
@@ -71,6 +71,45 @@ class CardTestDefault(unittest.TestCase):
     def test_two_centres(self):
         with self.assertRaises(IsNotLegalError):
             self.card.do_action("left", "right")
+
+    # Test all of the functions, make sure none of them give an error and that they return the right type of object (no testing of the logic yet)
+    def test_str(self):
+        self.assertIsInstance(str(self.card), str)
+
+    def test_actions_wanted(self):
+        self.assertIsInstance(self.card.actions_wanted(), list)
+
+    def test_is_legal_action(self):
+        # Regardless of which options are used it should still return either True or False
+        possible_options = [None, 'player1', 'player2', 'self', 'left', 'centre', 'right']
+
+        for option1 in possible_options:
+            for option2 in possible_options:
+                self.assertIsInstance(self.card.is_legal_action(option1, option2), bool)
+
+    def test_need_others(self):
+        # Either the card does need others 
+        # in which case the return value should be a list, 
+        # or it doesn't in which case the return value should be None
+        self.assertIsInstance(self.card.need_others(), (type(None), list))
+
+    def test_add_others(self):
+        # if need_others returns None 
+        # then add_others should be an exception, 
+        # otherwise add_others should work fine
+        if self.card.need_others():
+            self.card.add_others(['player1'])
+        else:
+            with self.assertRaises(NoKnowledgeError):
+                self.card.add_others(['player1'])
+
+    def test_init_text(self):
+        self.assertIsInstance(self.card.init_text(), str)
+
+    def test_any_changes(self):
+        # The card can do anything it wants here except throw an exception
+        self.card.any_changes()
+
 
 
 

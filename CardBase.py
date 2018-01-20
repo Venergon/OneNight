@@ -28,7 +28,7 @@ class Villager(Card):
             return True
 
     def need_others(self):
-        return [None]
+        return None
 
     def add_others(self, others):
         raise NoKnowledgeError
@@ -398,8 +398,10 @@ class Werewolf(Wolf):
                 return False
             else:
                 return True
-        elif person1 is None or person2 is not None:
+        elif person2 is not None:
             return False
+        elif person1 is None:
+            return True
         elif person1 not in centre_cards:
             return False
         else:

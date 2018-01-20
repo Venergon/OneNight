@@ -1,5 +1,6 @@
 from CardTemplate import *
 from DotH import *
+from Team import Team
 import copy
 
 # TODO: Curator, Revealer, Bodyguard, Witch, Sentinel, Paranomal Investigator
