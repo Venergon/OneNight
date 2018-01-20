@@ -145,10 +145,13 @@ class Game:
                 raise ValueError("Not every player has an action yet")
 
         original_original = copy.copy(self.original)
-        self.roles.sort(lambda x: x.order_num)
-        for role in self.roles:
+        roles = [
+                self.matchup[player]
+                for player in self.matchup
+        ]
+        for role in sorted(roles, key = lambda x: x.order_num):
             for player, player_role in original_original.items():
-                if type(player_role) == role and player not in centre_cards:
+                if player_role is role and player not in centre_cards:
                     person1, person2 = self.actions_to_do[player]
                     self.action_returns[player] = player_role.do_action(person1, person2)
 

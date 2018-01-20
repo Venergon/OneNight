@@ -1,5 +1,4 @@
-#!/usr/local/bin/python3.5
-# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 
 # written by Alex Rowell
 # A cgi script to run One Night Ultimate Werewolf
