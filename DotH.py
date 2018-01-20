@@ -1,5 +1,3 @@
-from CardBase import *
-
 class IsNotLegalError(TypeError):
     pass
 

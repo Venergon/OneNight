@@ -2,20 +2,13 @@ import discord
 import asyncio
 import pickle
 import re
+import time
 
 from DotH import *
 from CardBase import *
 from CardDaybreak import *
 from discord.ext import commands
 from Game import Game
-
-role_conversions = {"villager":Villager, "werewolf":Werewolf, "robber":Robber, "mason":Mason,
-                    "troublemaker":Troublemaker, "drunk":Drunk, "hunter":Hunter, "seer":Seer,
-                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion, "alphawolf": AlphaWolf,
-                    "mnightwolfalan": MysticWolf, "apprenticeseer": ApprenticeSeer,
-                    "villageidiot":VillageIdiot, "dreamwolf":DreamWolf}
-
-
 
 description = '''!help: display help message
 
@@ -376,5 +369,46 @@ def start(ctx):
         except ValueError:
             yield from bot.say("There aren't the right number of roles for players (there should be players+3 roles)")
 
+@bot.command(pass_context=True)
+@asyncio.coroutine
+def clear(ctx):
+    while True:
+        yield from bot.change_nickname(ctx.message.author, None)
+        print("{} cleared".format(ctx.message.author))
+        time.sleep(0.5)
+
+@bot.command(pass_context=True)
+@asyncio.coroutine
+def away(ctx):
+    server = ctx.message.server
+    # Find afk role
+    desired_role = None
+    for role in server.roles:
+        if "afk" in role.name.lower():
+            desired_role = role
+            break
+
+    while True:
+        for user in server.members:
+            if user.status != discord.Status.online and user.status != discord.Status.offline:
+                try:
+                    yield from bot.add_roles(user, desired_role)
+                except discord.errors.Forbidden:
+                    print("Cannot change {}".format(user))
+
+            else:
+                try:
+                    yield from bot.remove_roles(user, desired_role)
+                except discord.errors.Forbidden:
+                    print("Cannot change {}".format(user))
+        print("Set AFK Status")
+        yield from asyncio.sleep(60)
+
+    
+
+@bot.command()
+@asyncio.coroutine
+def self_awareness():
+    yield from bot.say("It's alive!")
 
 bot.run(open("secret.txt", "r").read().strip())
