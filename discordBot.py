@@ -307,7 +307,6 @@ def vote(ctx, server_id: str, votee: str):
 
                         if Team.Tanner in dying_teams:
                             # Tanner wins. This does not affect the villagers
-                            winning_teams.append(Team.Tanner)
                             if Team.Werewolf in winning_teams:
                                 # Werewolves lose because they must not let the tanner die
                                 winning_teams.remove(Team.Werewolf)
@@ -326,7 +325,15 @@ def vote(ctx, server_id: str, votee: str):
                 # Print out the end of game summary with everyone's current roles
                 for player, role in g.matchup.items():
                     if player in g.players:
-                        if role.win_team in winning_teams:
+                        
+                        if role.win_team == Team.Tanner:
+                            # Tanner only wins if they die
+                            if player in total_killed:
+                                winners.append(player.mention + " " + str(role))
+                            else:
+                                losers.append(player.mention + " " + str(role))
+
+                        elif role.win_team in winning_teams:
                             winners.append(player.mention+" "+str(role))
                         else:
                             losers.append(player.mention+" "+str(role))

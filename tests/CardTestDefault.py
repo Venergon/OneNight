@@ -52,6 +52,16 @@ class CardTestDefault(unittest.TestCase):
 
         self.assertIn(expected, text, msg)
 
+
+    # Checks that one piece of text does not contain an expected substring, ignoring case
+    def assert_not_contains(self, text, expected, msg=None):
+        text = text.lower()
+        expected = expected.lower()
+
+        self.assertNotIn(expected, text, msg)
+
+
+
     # No targets is generally assumed to be fine and not do anything, subclasses will need to override if doing nothing is illegal
     def test_no_targets(self):
         self.card.do_action(None, None)
