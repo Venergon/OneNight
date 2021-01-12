@@ -14,7 +14,7 @@ def obfuscate(plain_text, key):
 
     for plain_let, key_let in zip(plain_text, key):
         new_let_num = ord(plain_let)+ord(key_let)
-        
+
         if new_let_num > 127:
             new_let = chr(new_let_num-128)
         else:
@@ -38,12 +38,12 @@ def deobfuscate(plain_text, key):
 
     for plain_let, key_let in zip(plain_text, key):
         new_let_num = ord(plain_let)-ord(key_let)
-        
+
         if new_let_num < 0:
             new_let = chr(new_let_num+128)
         else:
             new_let = chr(new_let_num)
-            
+
         if new_let == chr(0):
             break
 

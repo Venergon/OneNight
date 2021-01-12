@@ -14,7 +14,8 @@ from CardBase import *
 
 role_conversions = {"villager":Villager, "werewolf":Werewolf, "robber":Robber, "mason":Mason,
                     "troublemaker":Troublemaker, "drunk":Drunk, "hunter":Hunter, "seer":Seer,
-                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion}
+                    "insomniac":Insomniac, "tanner":Tanner, "minion":Minion,
+                    'paranormal':ParanormalInvestigator}
 
 
 

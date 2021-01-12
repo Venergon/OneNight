@@ -248,7 +248,7 @@ def vote(ctx, server_id: str, votee: str):
                 winning_teams = []
                 if not killed:
                     # Circle vote, if a werewolf is alive then werewolves win otherwise villagers win
-                    if g.card_in_play(Werewolf):
+                    if g.team_in_play(Team.Werewolf):
                         yield from bot.send_message(g.channel, "After all was said and done, the villagers were far too conflicted to kill anyone. What a shame "
                               "too, as there was still a werewolf.")
                         winning_teams = [Team.Werewolf]

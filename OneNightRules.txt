@@ -1,0 +1,326 @@
+﻿1) Introduction to One Night
+
+
+One Night Ultimate Werewolf is a game based on the mafia games commonly played
+in this group (well, the Werewolf variant but they are functionally the same).
+There is an informed minority - the werewolves - as well as an uninformed
+majority - the town - and the town have to work out who the werewolves are and
+convince a majority of players to vote to kill them. However, there are many
+differences between the two games, the most prominent being the fact that the
+game takes place over only one night phase and one day phase and the fact that a
+player's role can change throughout the game (this can happen in some mafia
+games but is not generally used).
+
+One of the features of regular One Night Ultimate Werewolf is that no moderator
+is needed, and to simulate this a bot will be used, connected to either a
+website (http://cgi.cse.unsw.edu.au/~z5116848/OneNight/RunGame.cgi) or a discord
+server, depending on what the group decides.
+
+2) Objectives for the teams
+
+Within One Night there are three main teams - the town, the werewolf team and
+the Tanner. The goals are made such that generally only one team wins in one
+game. For the purposes of objectives (both which team(s) win and who is part of
+each team) players are considered to be the role that they have at the END of
+the night phase. Note that although the minion is on the Werewolf team, they do
+not count as a Werewolf themselves and instead count as a townie for the purpose
+of triggering team objectives.
+
+2a) Town
+
+The goal of the town is to kill at least one of the werewolves. It doesn't
+matter who else dies however if at least one of the werewolves is killed then
+all members of the town win (even  those who personally die).
+
+The only exception to this win condition is if no werewolves exist. In this
+case, the town win by having no deaths at all.
+
+2b) Werewolf team
+
+The goal of the werewolf team is almost the opposite of the town - their goal is
+to ensure that no werewolves are killed. It doesn't matter how many town members
+die, if at least one Werewolf dies everyone on the Werewolf team loses. The only
+exception to this is that if the tanner dies, the Werewolf team loses no matter
+what.
+
+2c) The Tanner
+
+The tanner's goal is to convince others to kill them. It doesn't matter what
+other kills happen, if the Tanner dies they win. As stated before, this also
+results in a loss for the Werewolf team but does NOT automatically cause a loss
+for the town.
+
+3) Order of play
+
+The game of One Night is split into 4 main phases - allocation, night, day and
+voting. Note each of these phases only happens once, in contrast to mafia where
+night and day repeat until a victory condition is met.
+
+3a) Allocation
+
+Although not a part that the players are involved in, the allocation of roles
+has an important difference to mafia games. Rather than having the same number
+of roles as players, in One Night there are 3 more roles than players. This
+means that 3 roles will not be allocated to the players and instead will be
+assigned to the 'centre', which certain roles can interact with. These 3 cards
+will each be allocated a location of 'left', 'middle', and 'right' so that if
+two roles interact with one location the same role will be used each time. This
+also means that there will ultimately be three roles that are not used, leading
+occasionally to edge cases where for example there are no werewolves (most of
+these will be handled with through rules but if you see one that isn't covered
+please tell me). Your allocation will either be given in a private message by
+the bot (if in discord) or will be displayed on website (if using the website)
+
+3b) Night
+
+During the night phase, terryone will send in their night actions, either using
+the website UI or by sending a private message to the bot in the form "!target
+<game id> <players to target>".
+Even if your role changes during the night (which most people wouldn't know
+about anyway) the night action you perform is the one of the role you were
+assigned at the end of the allocation phase. Even if you have no night action,
+you must still submit your action (by targeting no one).
+Although all night actions are entered at the same time, the actions will happen in
+series, with the ordering being a slightly modified version of the official One
+Night Ultimate Werewolf one (see section 8 for the order, the modifications are
+just that rather than certain roles waking up to see each other at the start,
+this information is given as part of the allocation phase). This can mean that
+certain actions are affected by other ones or that certain information gained
+can become inaccurate. Once all roles and acknowledgements have been sent in,
+the night actions will be executed and the results returned to the players
+(either by private message in discord or displayed on the website). At the
+conclusion of returning information, the game will progress to day phase. Note
+that unless stated by your role, players will not receive what role they are at
+the end of the night phase.
+
+3c) Day
+
+At this point chat will be allowed within a chat created for the game. Players
+will talk with each other to determine each other's roles as well as their own.
+Play will continue for 30 min, at the conclusion of that hour chat will no
+longer be allowed and the game will progress to voting phase.
+
+3d) Voting
+
+At this phase everyone votes for the player they want to Lynch. This is done
+either via the website or with a private message in the form "!vote <game id>
+<player>". As such all votes are done in secret. Everyone must vote for another
+player (not themselves) and cannot vote for abstain or no Lynch. Each player
+gets one vote and all votes are final. Once everyone has voted, the votes will
+be tallied and whoever has the most votes will be killed. All players' starting
+and final roles will be revealed as well as which team(s) won (based on the
+objectives in section 2).
+
+4) Roles
+
+The official game has many different roles through various expansions however
+for this game roles will be taken only from the base game and a somewhat
+complicated role will not be used (doppelganger). Some of these will not be used
+depending on the number of players.
+
+Note that all actions that happen during the night (eg. Troublemaker) are done
+by whoever has that role at the START of the night while any effects that happen
+during the day or voting phases (eg. Hunter) trigger based on who has that role
+at the END of the night. Any role that 'may' perform an action can also choose
+to abstain from performing that action however any role that 'must' perform an
+action has to do so.
+
+All information such as objectives and other players revealed in the role PM are
+only accurate for the start of the night phase and may have changed due to role
+swapping (you will not be notified if any information is no longer accurate)
+
+Werewolf team:
+
+Werewolf (at most 2) - You are a WEREWOLF! You and <other Werewolf> are working
+together to take over the town. You win with the Werewolf team, so want to
+ensure that you and <other Werewolf> survive.
+
+Minion - You are the MINION! You are trying to help <Werewolf 1> and <Werewolf
+2> take over the town, although they do not know who you are. You win with the
+Werewolf team, so want to ensure that both wolves survive - you do not care
+whether or not you personally survive.
+
+Town:
+
+Mason (at most 2) - You are a MASON! You and <other mason> both know of each
+other and that you are both on the town team. You (both) win with the town, so
+want to kill at least one Werewolf.
+
+Seer - You are the SEER! You may either select one other person in the game to
+view their role, or select two of the locations in the centre to see the role at
+each location. You win with the town, so want to kill at least one Werewolf.
+
+Robber - You are the ROBBER! You may select one player to swap roles with. As
+you swap roles, you see what role you take. You win with the town, so want to
+kill at least one Werewolf.
+
+Troublemaker - You are the TROUBLEMAKER! You may select two other players to
+swap roles. You will not see either role. You win with the town, so want to kill
+at least one Werewolf.
+
+Drunk - You are the DRUNK! You must choose one center location to swap roles
+with. You will not see your new role. You win with the town, so want to kill at
+least one Werewolf.
+
+Insomniac - You are the INSOMNIAC! At the end of the night phase, you will see
+what your role now is. You win with the town, so want to kill at least one
+Werewolf.
+
+Hunter - You are the HUNTER! If you are killed, whoever you were voting for will
+also die. You win with the town, so want to kill at least one Werewolf.
+
+Villager (at most 3) - You are the VILLAGER! Unfortunately your particular
+talents do not have a use in this situation however you can still contribute to
+the deducing of who to kill. You win with the town, so want to kill at least one
+Werewolf.
+
+Tanner:
+
+Tanner (duh) - You are the TANNER! Your goal is to attract enough suspicion that
+you get killed. If you are killed in any way you win.
+
+5) Other rules
+
+5a) Chat about the game (during the course of the game) is to be contained only
+within the main game chat (there is only one game chat). If I am told that
+anyone talks about the game through any other method then it may result in a ban
+from any future games I host.
+
+5b) The main game chat is only to be used during the day phase. It will be set
+up beforehand so that the players know who each other are and so that I can send
+announcements about phases. Some light non-mafia chat may be allowed during
+other times but ANY mafia chat during any other phase (especially the night
+phase) may result in a ban from future games.
+
+5c) Do not quote anything sent to you by the bot. If you wish to share anything
+put it into your own words. This includes anything that could reasonably be
+thought of as trying to get around this rule (eg. Screenshots). Breaking this
+rule will result in a kneecapping as well as a possible ban from future games.
+Note: it is quite reasonable to state "I saw that Mimmy is a werewolf" however
+quoting "With your mystical powers, you divine that Mimmy Jurran is a WEREWOLF"
+(if that is what has been sent), is breaking this rule. If you are unsure about
+whether something is breaking the rules ask in the chat first (with a general
+example, for obvious reasons). This rule includes faking a quote - if you send
+anything to the chat which would reasonably be thought of as a PM quote, it will
+be classed as breaking the rule as well.
+
+5d) Always follow the spirit of the rules, as well as the letter of them. If
+you find something that isn't explicitly banned but would clearly go against the
+spirit of the rules then do not do it - the goal is to have a fun casual game,
+rather than just winning at all costs. If you're unsure about something, please
+ask (with a general example rather than the specific one if necessary) in the
+main chat.
+
+
+5e) In order to play, you must have read this document (or if you are familiar
+with one night the sections that indicate changes from the physical version).
+In order to show that you have, send me a PM with the message "The Ocean Chose
+Me".
+
+6) Edge Cases
+
+There are multiple edge cases in this game, mainly due to the fact that there
+are cards in the centre. Here are some edge cases and the rules put in place to
+solve them (some of these are house rules that I will state as such)
+
+6a) Ties
+
+In the case of a tie where multiple people have the same number of votes, two
+things can happen based on the distribution of votes:
+
+   If the people with the most votes have more than 1 vote each, all of those
+   people die.
+
+   If all players have exactly 1 vote, nobody dies. This becomes useful where
+   there are no werewolves. In order to facilitate this kind of tie, a randomly
+   ordered list of the players will be provided and players can choose to vote
+   'up' or 'down' to vote for the person before or after them in the list
+   respectively (the list is considered a loop with the first and last people
+   being adjacent).
+
+6b) Lone Wolf
+
+If at the start of the game there is only one werewolf, that Werewolf can choose
+one of the center roles to view (they will get a slightly different role PM).
+This is to provide the Werewolf with a decent fake role claim as they do not
+have another Werewolf to help them.
+
+6c) No werewolves
+
+If there are no werewolves in play after the night phase, multiple changes
+happen (players will not be told if this is the case):
+
+   *house rule* The minion now counts as a Werewolf for all intents and purposes
+   other than the lone wolf rule (they will get a different role PM if the night
+   phase starts with no werewolves however they should remember that werewolves
+   can still come into play throughout the night phase). This is because
+   otherwise the minion can ensure a win by just voting for anything that breaks
+   a 1 vote tie.
+
+   If there are no werewolves or minion, the town now wins by ensuring that
+   noone dies. This is why everyone having one vote results in noone dying.
+
+   *house rule* if there is a 1 vote tie, the Tanner's vote does not break it.
+   This is because otherwise the Tanner can just spite the villagers without any
+   gain.
+
+7) Tips
+
+Remember that many roles are about changing other roles - do not assume that
+your role at the start of the night phase is still yours at the end. A big part
+of this game is not only finding out the roles of others but also your own
+role.
+
+Although in regular mafia it is almost never useful for a townsperson to lie,
+there are many reasons for a townsperson to lie in One Night. For example, if a
+seer saw someone's role as Werewolf, the seer could claim that they were
+troublemaker and swapped the Werewolf with someone else in order to get a
+confession from the Werewolf (before the seer themselves confesses that they
+didn't swap anyone and so everyone can vote for the confirmed werewolf). Just
+don't be surprised if people turn on you if you lie too much.
+
+Remember that someone acting suspicious could be: a minion trying to get
+themselves killed so a Werewolf isn't killed, a Tanner trying to get themselves
+killed, a hunter who doesn't care if they get killed (since they take someone
+down with them) or a Werewolf trying to make people think they are a Tanner or
+minion. The game is designed so that many behaviours are reasonable for either a
+specific town role or Werewolf to do.
+
+Unless you have a very helpful seer who saw the same role you picked up, a game
+as the drunk is generally somewhat of a game of chance. You have to as quickly
+as possible work out everyone else's roles so that you can work out what roles
+are left out and what you are likely to be. For that reason it is generally not
+a good idea to immediately reveal yourself lest it get deduced that both
+werewolves and the minion are in the centre (and so you must have become one of
+them).
+
+For roles where you see someone else's original role (seer, robber) it can be
+useful to claim and state the role you saw early, so that that person can
+confirm and clear you as town. Remember however that one werewolf could try to
+'clear' the other by the same method.
+
+Although any role who 'may' do an action can choose not to do that action, it is
+generally beneficial to perform your action.
+
+8) Night Order
+
+As stated previously, although I get all role actions at the same time, there is
+a pre arranged order to how they play out. This is the order (very slightly
+modified from the original One Night rules):
+
+0 (in role PM) - Werewolves, Minion, Masons
+1 - Seer
+2 - Robber
+3 - Troublemaker
+4 - Drunk and Insomniac (as they can never affect each other, technically insomniac happens after drunk)
+
+This will need to be changed in future games if roles like the doppelganger
+(which could change the Werewolf, minion and mason PMs so they have to be placed
+in original order) are added but these modifications allow the game to run
+quicker than if every action was done in order.
+
+9) Further questions
+
+If there are any ambiguities or possible edge cases in the rules, feel free to
+comment on the post this document is on and I will try to clear up any
+confusion.
