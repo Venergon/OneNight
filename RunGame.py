@@ -167,7 +167,7 @@ def voting(g):
 
         if Team.Tanner in dying_teams:
             # Tanner wins. This does not affect the villagers
-            winning_teams.append(Team.Tanner)
+            # Tanner is not added to winning teams because each tanner dies individually
             if Team.Werewolf in winning_teams:
                 # Werewolves lose because they must not let the tanner die
                 winning_teams.remove(Team.Werewolf)
@@ -187,6 +187,8 @@ def voting(g):
     for player, role in g.matchup.items():
         if player in g.players:
             if role.win_team in winning_teams:
+                winners.append(player+" "+str(role))
+            elif role.win_team == Team.Tanner and player in total_killed:
                 winners.append(player+" "+str(role))
             else:
                 losers.append(player+" "+str(role))

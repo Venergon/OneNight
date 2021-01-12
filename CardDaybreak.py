@@ -319,3 +319,64 @@ class Wolfling(Wolf):
 
     def any_changes(self):
         pass
+
+# Can look at up to two other players' cards. The first non-villager they see is the team they
+# become (and stop reading at that point)
+class ParanormalInvestigator(Card):
+    def __init__(self, game, player):
+        super().__init__(game, player)
+        self.win_team = Team.Villager
+        self.death_team = Team.Villager
+        self.order_num = 5.3
+
+    def __str__(self):
+        return "the inquisitive Paranormal Investigator"
+
+    def actions_wanted(self):
+        return [("other", ), ("other", "other"), None]
+
+    def is_legal_action(self, person1, person2):
+        if person1 is None and person2 is None:
+            return True
+        elif person1 not in centre_cards and person1 in self.game.players and person2 is None:
+            return True
+        elif person1 not in centre_cards and person1 in self.game.players and person2 not in centre_cards and person2 in self.game.players:
+            return True
+        else:
+            return False
+
+    def need_others(self):
+        return None
+
+    def add_others(self, others):
+        raise NoKnowledgeError
+
+    def init_text(self):
+        return "You are the Paranormal Investigator! You may look up to two other players' cards. If you see a non-villager, you join that team."
+
+    def do_action(self, person1=None, person2=None):
+        if not self.is_legal_action(person1, person2):
+            raise IsNotLegalError
+        elif person1 is None:
+            return "You decided that doing nothing is the safest approach - after all, you might not like what you see..."
+        else:
+            card1 = self.game.peek(person1)
+            if card1.death_team != Team.Villager:
+                self.win_team = card1.death_team
+                self.death_team = card1.death_team
+                return "After some sleuthing, you found that {} is {}. Unfortunately, as they " \
+                    "are on the {} team, you have been converted to their team".format(str(person1), str(card1), str(card1.death_team))
+            elif person2 is None:
+                return "After some sleuthing, you found that {} is {}".format(str(person1), str(card1))
+            else:
+                card2 = self.game.peek(person2)
+                if card2.death_team != Team.Villager:
+                    self.win_team = card2.death_team
+                    self.death_team = card2.death_team
+                    return "After some sleuthing, you found that {} is {} and {} is {}. Unfortunately, as the second is on the {}, you have been converted to their team".format(str(person1), str(card1), str(person2), str(card2), str(card2.death_team))
+                else:
+                    return "After some sleuthing, you found that {} is {} and {} is {}.".format(str(person1), str(card1), str(person2), str(card2))
+
+    def any_changes(self):
+        pass
+
