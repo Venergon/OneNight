@@ -26,7 +26,6 @@ class User:
         #Need to do this for each item so that they are now part of the object
         self.zid = fields.get("zid", "")
         self.password = fields.get("password", "")
-            
 
     def __str__(self):
         # Should never come up in actual running, just useful for debugging

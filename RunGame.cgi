@@ -121,7 +121,7 @@ Welcome {}
         token = ""
         login = """
 <form method="POST" action="">
-    <input type="text" name="username" placeholder="zid">
+    <input type="text" name="username" placeholder="username">
     <input type="password" name="password" placeholder="password">
     <input type="hidden" name="post_action" value="login">
     <input type="submit" value="login">
@@ -166,8 +166,8 @@ def home_page(parameters, me):
     <h2>Create Your Account Today!</h2>
     <form method="post" action="">
         <input type="hidden" name="post_action" value="make_account">
-        <input type="text" name="username" placeholder="zid">
-        <p>zid</p>
+        <input type="text" name="username" placeholder="username">
+        <p>username</p>
         <input type="password" name="password" placeholder="Password">
         <p>Password</p>
         <input type="submit" value="Create!">
@@ -467,8 +467,8 @@ def account_creation_successful():
 def account_creation_failed():
     return """<h1>Account Creation Error</h1>
 <p>Oops! It appears something has gone wrong with your account creation</p>
-<p>It's possible that the zid you've used already exists, or that you may
-have not put in a zid and password</p>
+<p>It's possible that the username you've used already exists, or that you may
+have not put in a username and password</p>
 <p>Please try again</p>"""
 
 

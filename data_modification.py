@@ -1,7 +1,9 @@
+import hashlib
+
 from CardBase import *
 from CardDaybreak import *
 from constants import *
-from User import User
+from User import *
 import Game
 import os, glob, string, random, shutil, copy
 
@@ -111,7 +113,7 @@ def string_to_list(text):
 
     #Remove the [] around the list
     text = text[1:-1]
-    
+
     result = text.split(",")
     result = list(map(lambda x: x.strip(), result))
     while "" in result:
@@ -163,11 +165,15 @@ def make_pending_account(parameters):
         f.write("""
 zid={}
 password={}
-""".format(zid, password))
-    
+""".format(zid, transform_password(zid, password)))
 
 
     return True
+
+def transform_password(zid, password):
+    m = hashlib.sha3_256()
+    m.update(password.encode())
+    return m.hexdigest()
 
 def login_as(zid, password):
     if os.path.exists("{}/{}".format(DATA_DIRECTORY, zid)):
@@ -175,7 +181,7 @@ def login_as(zid, password):
     else:
         return None
 
-    if user.password == password:
+    if user.password == transform_password(zid, password):
         token = []
         for i in range(256):
             token.append(random.choice(string.ascii_letters+string.digits))
